@@ -13,7 +13,7 @@ Konfigurace: Ubuntu SSD, 8 GB, 0.5 CPU, 1 VCPU
 ----
 
 .Založení řídícího uzlu na CloudFIT
-image::./images/vm_ctl.png[]
+image::./images/vm_ctl.png[,800,]
 
 === CMP nodes (výpočetní uzly)
 
@@ -24,13 +24,13 @@ Konfigurace: Ubuntu SSD, 2 GB, 0.2 CPU, 1 VCPU
 Dokumentace zachycuje vytvoření pouze prvního výpočetního uzlu.
 
 .Založení výpočetního uzlu na CloudFIT
-image::./images/vm_cmp.png[]
+image::./images/vm_cmp.png[,800,]
 
 
 === Cílový stav
 
 .VM založené na CloudFIT
-image::./images/vms.png[]
+image::./images/vms.png[,800,]
 
 === Přehled založených VM
 
