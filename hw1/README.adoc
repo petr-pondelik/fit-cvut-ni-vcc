@@ -1,0 +1,52 @@
+= HW1: Nasazení OpenStacku
+
+Práce staví na záznamu 3. cvičení, který vychází z https://docs.openstack.org/kolla-ansible/victoria/user/quickstart.html[Quick Startu pro OpenStacku].
+
+== Založení VM
+
+Nejprve je potřeva vytvořit tři VM prostřednictvím OpenNebula na CloudFIT.
+
+=== CTL node (řídící uzel)
+
+----
+Konfigurace: Ubuntu SSD, 8 GB, 0.5 CPU, 1 VCPU
+----
+
+.Založení řídícího uzlu na CloudFIT
+image::./images/vm_ctl.png[]
+
+=== CMP nodes (výpočetní uzly)
+
+----
+Konfigurace: Ubuntu SSD, 2 GB, 0.2 CPU, 1 VCPU
+----
+
+Dokumentace zachycuje vytvoření pouze prvního výpočetního uzlu.
+
+.Založení výpočetního uzlu na CloudFIT
+image::./images/vm_cmp.png[]
+
+
+=== Cílový stav
+
+.VM založené na CloudFIT
+image::./images/vms.png[]
+
+=== Přehled založených VM
+
+|===
+| Node | Název | IP adresa
+
+| ctl
+| pondepe1-cv3-ctl
+| 10.38.6.0
+
+| cmp-1
+| pondepe1-cv3-cmp-1
+| 10.38.6.22
+
+| cmp-2
+| pondepe1-cv3-cmp-2
+| 10.38.6.93
+
+|===
