@@ -1,10 +1,32 @@
 = HW1: Nasazení OpenStacku
 
-Práce staví na záznamu 3. cvičení, který vychází z https://docs.openstack.org/kolla-ansible/victoria/user/quickstart.html[Quick Startu pro OpenStacku].
+Práce staví na záznamu https://campuscvut.sharepoint.com/sites/Predmet-B202-NI-VCC-C102/Sdilene%20dokumenty/Forms/AllItems.aspx?id=%2Fsites%2FPredmet%2DB202%2DNI%2DVCC%2DC102%2FSdilene%20dokumenty%2FGeneral%2FRecordings%2FSch%C5%AFzka%20v%20kan%C3%A1lu%20%E2%80%9EGeneral%E2%80%9C%2D20210318%5F143526%2DZ%C3%A1znam%20sch%C5%AFzky%2Emp4&parent=%2Fsites%2FPredmet%2DB202%2DNI%2DVCC%2DC102%2FSdilene%20dokumenty%2FGeneral%2FRecordings&p=true&originalPath=aHR0cHM6Ly9jYW1wdXNjdnV0LnNoYXJlcG9pbnQuY29tLzp2Oi9zL1ByZWRtZXQtQjIwMi1OSS1WQ0MtQzEwMi9FZjkyMW1Vb1FEQkpoOGViUDdfMHZHd0JpMHg2dWZ0SDRZYWpRS2FGVmZjc1Z3P3J0aW1lPUVXTGZ5VFQwMkVn[3. cvičení], které vychází z https://docs.openstack.org/kolla-ansible/victoria/user/quickstart.html[Quick Startu pro OpenStacku].
+
+== Teorie
+
+=== Kolla
+
+Projekt OpenStacku, který se zabývá sestavováním kontejnerů s komponentami OpenStacku.
+
+Má následující subprojekty.
+
+==== Kolla Ansible
+
+Produkuje recepty v ansible, které dokáží OpenStack automaticky nasadit a nakonfigurovat.
+
+Je opinionated - má názor na to, jak by věci měly defaultně být (lze změnit)
+
+==== Kayobe
+
+Slouží pro přímý deployment na HW stroje.
+
+=== Keystone
+
+Služba OpenStacku poskytující autentizaci a autorizaci.
 
 == Založení VM
 
-Nejprve je potřeva vytvořit tři VM prostřednictvím OpenNebula na CloudFIT.
+Nejprve je potřeva vytvořit tři VM prostřednictvím OpenNebula na Cloud FIT.
 
 === CTL node (řídící uzel)
 
@@ -12,7 +34,7 @@ Nejprve je potřeva vytvořit tři VM prostřednictvím OpenNebula na CloudFIT.
 Konfigurace: Ubuntu SSD, 8 GB, 0.5 CPU, 1 VCPU
 ----
 
-.Založení řídícího uzlu na CloudFIT
+.Založení řídícího uzlu na Cloud FIT
 image::./images/vm_ctl.png[,800,]
 
 === CMP nodes (výpočetní uzly)
@@ -23,13 +45,13 @@ Konfigurace: Ubuntu SSD, 2 GB, 0.2 CPU, 1 VCPU
 
 Dokumentace zachycuje vytvoření pouze prvního výpočetního uzlu.
 
-.Založení výpočetního uzlu na CloudFIT
+.Založení výpočetního uzlu na Cloud FIT
 image::./images/vm_cmp.png[,800,]
 
 
 === Cílový stav
 
-.VM založené na CloudFIT
+.VM založené na Cloud FIT
 image::./images/vms.png[,800,]
 
 === Přehled založených VM
@@ -50,3 +72,647 @@ image::./images/vms.png[,800,]
 | 10.38.6.93
 
 |===
+
+== Připojení na VM pomocí SSH
+
+Na vytvořené VM se můžeme přihlásit pomocí SSH pod uživatelem root. + 
+Není potřeba zadávat heslo díky nastavení SSH klíče na Cloud FIT.
+
+=== Připojení na CTL node
+
+[source, bash]
+----
+ssh root@10.38.6.0
+----
+
+**Log z terminálu**
+
+[source, bash]
+----
+wiedzmin@wiedzmin-HP-ProBook-450-G7:~$ ssh root@10.38.6.0
+The authenticity of host '10.38.6.0 (10.38.6.0)' can't be established.
+ECDSA key fingerprint is SHA256:Kys9pyk+L4iSp55LdSJBOHBDIvF5Yast+e5yIvq8gkM.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.38.6.0' (ECDSA) to the list of known hosts.
+Welcome to Ubuntu 20.04 LTS (GNU/Linux 5.4.0-28-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Fri 02 Apr 2021 08:45:25 AM UTC
+
+  System load:  0.08               Processes:             109
+  Usage of /:   12.6% of 48.96GB   Users logged in:       0
+  Memory usage: 2%                 IPv4 address for ens3: 10.38.6.0
+  Swap usage:   0%
+
+ * Ubuntu 20.04 LTS is out, raising the bar on performance, security,
+   and optimisation for Intel, AMD, Nvidia, ARM64 and Z15 as well as
+   AWS, Azure and Google Cloud.
+
+     https://ubuntu.com/blog/ubuntu-20-04-lts-arrives
+
+
+0 updates can be installed immediately.
+0 of these updates are security updates.
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+
+Last login: Tue Apr 28 23:16:29 2020
+root@pondepe1-cv3-ctl:~#
+----
+
+=== Připojení na CMP nodes
+
+[source, bash]
+----
+ssh root@10.38.6.22
+ssh root@10.38.6.93
+----
+
+**Log z terminálu**
+
+[source, bash]
+----
+wiedzmin@wiedzmin-HP-ProBook-450-G7:~$ ssh root@10.38.6.22
+The authenticity of host '10.38.6.22 (10.38.6.22)' can't be established.
+ECDSA key fingerprint is SHA256:QdxzkC9sMHgBRUZWaDZZdIpfhLKJvNibgURATPULF5k.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.38.6.22' (ECDSA) to the list of known hosts.
+Welcome to Ubuntu 20.04 LTS (GNU/Linux 5.4.0-28-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Fri 02 Apr 2021 08:45:41 AM UTC
+
+  System load:  0.0                Processes:             109
+  Usage of /:   12.8% of 48.96GB   Users logged in:       0
+  Memory usage: 10%                IPv4 address for ens3: 10.38.6.22
+  Swap usage:   0%
+
+ * Ubuntu 20.04 LTS is out, raising the bar on performance, security,
+   and optimisation for Intel, AMD, Nvidia, ARM64 and Z15 as well as
+   AWS, Azure and Google Cloud.
+
+     https://ubuntu.com/blog/ubuntu-20-04-lts-arrives
+
+
+0 updates can be installed immediately.
+0 of these updates are security updates.
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+
+Last login: Tue Apr 28 23:16:29 2020
+root@pondepe1-cv3-cmp-1:~#
+----
+
+[source, bash]
+----
+wiedzmin@wiedzmin-HP-ProBook-450-G7:~$ ssh root@10.38.6.93
+The authenticity of host '10.38.6.93 (10.38.6.93)' can't be established.
+ECDSA key fingerprint is SHA256:rsWimuE4XoX5R7p9UjU2SfLb4zxWA6UAyDgaudNaVHM.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.38.6.93' (ECDSA) to the list of known hosts.
+Welcome to Ubuntu 20.04 LTS (GNU/Linux 5.4.0-28-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Fri 02 Apr 2021 08:45:57 AM UTC
+
+  System load:  0.8                Processes:             116
+  Usage of /:   12.9% of 48.96GB   Users logged in:       0
+  Memory usage: 11%                IPv4 address for ens3: 10.38.6.93
+  Swap usage:   0%
+
+ * Ubuntu 20.04 LTS is out, raising the bar on performance, security,
+   and optimisation for Intel, AMD, Nvidia, ARM64 and Z15 as well as
+   AWS, Azure and Google Cloud.
+
+     https://ubuntu.com/blog/ubuntu-20-04-lts-arrives
+
+
+0 updates can be installed immediately.
+0 of these updates are security updates.
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+
+Last login: Tue Apr 28 23:16:29 2020
+root@pondepe1-cv3-cmp-2:~#
+----
+
+== Nastavení přístupu z ctl node na cmp nodes bez hesla
+
+Z nodu **ctl** potřebujeme přistupovat na nody **cmp-1** a **cmp-2** bez hesla (za využití **SSH klíče**).
+
+Na uzlu **ctl** vygenerujeme pomocí ssh-keygen SSH klíč (public + private):
+
+[source, bash]
+----
+ssh-keygen
+----
+
+**Log z terminálu**
+
+[source, bash]
+----
+root@pondepe1-cv3-ctl:~# ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /root/.ssh/id_rsa
+Your public key has been saved in /root/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:ttBbPQ8JUs6bPfzf3BIWdb5JMjy1BbC+YRY59EmMXy4 root@pondepe1-cv3-ctl
+The key's randomart image is:
++---[RSA 3072]----+
+|          . o+o. |
+|         + ..=.o=|
+|        . + *.+=+|
+|       . . O OEoo|
+|      . S + & =oo|
+|       o + o Ooo |
+|        o   ..o. |
+|              .oo|
+|               .=|
++----[SHA256]-----+
+root@pondepe1-cv3-ctl:~#
+----
+
+Vygenerovaný public key potřebujeme přenést z řídícího ulzu do authorized_keys na výpočetních uzlech.
+
+Ze souboru `/root/.ssh/id_rsa.pub` na ctl node tedy zkopírujeme public key a na uzlech cmp-1 a cmp-2 ho přidáme do souboru `/root/.ssh/authorized_keys`.
+
+[source, bash]
+----
+cat .ssh/id_rsa.pub >> .ssh/authorized_keys #<1>
+# Zkopírovat obsah a např. s využitím editoru vim vložit na cmp-1 a cmp-2
+----
+
+<1> Nastavíme rovnou přístup ctl nodu sám na sebe bez hesla
+
+== Nastavení virtuálních síťových rozhraní
+
+Na všech nodech doplníme soubor `/etc/network/interfaces` o konfiguraci síťových rozhraní.
+
+**Originální konfigurace**
+----
+auto lo
+iface lo inet loopback
+
+auto ens3
+iface ens3 inet static
+  address 10.38.6.0 #<1>
+  network 10.38.4.0
+  netmask 255.255.252.0
+  gateway 10.38.4.1
+----
+
+<1> address je IP adresa uzlu - liší se v závislosti na uzlu
+
+**Upravená konfigurace**
+----
+auto lo
+iface lo inet loopback
+
+auto ens3
+iface ens3 inet static
+  pre-up ip link add veth0 type veth peer name veth1
+  pre-up ip link set veth0 up
+  pre-up ip link set veth1 up
+  address 10.38.6.0
+  network 10.38.4.0
+  netmask 255.255.252.0
+  gateway 10.38.4.1
+
+source /etc/network/interfaces.d/*.cfg
+----
+
+Následně potřebujeme na všech nodech restartovat příslušné síťové rozhraní:
+
+[source, bash]
+----
+ifdown ens3 && ifup ens3
+----
+
+== Aktualizace balíčků
+
+Na všech nodech je potřeba aktualizovat balíčky:
+
+[source, bash]
+----
+apt update && apt upgrade
+----
+
+== Instalace Kolla-ansible
+
+Nejprve je nutné nainstalovat potřebné závislosti.
+
+Na všech nodech:
+
+[source, bash]
+----
+apt-get install python3-dev libffi-dev gcc libssl-dev
+apt-get install python3-pip
+sudo pip3 install -U pip
+----
+
+Dále nainstalujeme Ansible a Kolla-ansible pouze na ctl node.
+
+[source, bash]
+----
+apt-get install ansible
+pip3 install kolla-ansible
+----
+
+Vytvoříme domácí adresář Kolla, tedy `/etc/kolla`. +
+Pracujeme pod uživatelem `root`, tudíž není potřeba měnit vlastníka adresáře.
+
+[source, bash]
+----
+mkdir -p /etc/kolla
+----
+
+Zkopírujeme vzorovou konfiguraci Kolla do `/etc/kolla`.
+
+[source, bash]
+----
+cp -r /usr/local/share/kolla-ansible/etc_examples/kolla/* /etc/kolla
+----
+
+Zkopírujeme vzorovou konfiguraci Kolla-ansible do domovského adresáře rootovského uživatele.
+
+[source, bash]
+----
+cp /usr/local/share/kolla-ansible/ansible/inventory/* .
+----
+
+== Konfigurace Ansible
+
+Upravíme konfiguraci Ansible. +
+V souboru `/etc/ansible/ansible.cfg` nastavíme do sekce `[defaults]` hodnoty:
+
+[source, cfg]
+----
+[defaults]
+host_key_checking=False
+pipelining=True
+forks=100
+----
+
+Zřejmě se jedná o konfiguraci optimalizující rychlost nasazení.
+
+`host_key_checking=False` vypne dialog pro kontrolu klíče při prvotním připojení přes SSH. +
+`pipelining=True` znamená, že služba před jedno SSH pouští sadu příkazů - nepřipojuje se opakovaně. +
+`forks=100` povoleno až 100 operací zároveň.
+
+== Konfigurace Ansible inventory file
+
+Inventory file je soubor, který specifikuje, které uzly má Kolla-ansible řídit a v jakých jsou třídách. +
+Můžeme v něm definovat role nodů a přístupové údaje.
+
+Kolla-ansible disponuje dvěma invertory files:
+
+* `all-in-one`
+* `multinode`
+
+`all-in-one` slouží pro deploy single-node OpenStacku na localhostu. +
+`multinode` se využívá pro deploy na více nodů.
+
+Využijeme tedy `multinode`.
+
+Upravíme soubor `multinode`, který jsme zkopírovali z adresáře `/usr/local/share/kolla-ansible/ansible/inventory/` do domovského adresáře.
+
+Nejprve nastavíme `ctl` node.
+
+IP adresu `ctl` nodu získáme na `ctl` nodu následujícím příkazem.
+
+[source, bash]
+----
+ip add
+----
+
+**Log z terminálu**
+
+[source]
+----
+root@pondepe1-cv3-ctl:~# ip add
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 02:00:0a:26:06:00 brd ff:ff:ff:ff:ff:ff
+    inet 10.38.6.0/22 brd 10.38.7.255 scope global ens3 #<1>
+       valid_lft forever preferred_lft forever
+    inet6 fe80::aff:fe26:600/64 scope link
+       valid_lft forever preferred_lft forever
+3: veth1@veth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 4e:6f:70:e4:a9:41 brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::4c6f:70ff:fee4:a941/64 scope link
+       valid_lft forever preferred_lft forever
+4: veth0@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 7e:0d:03:69:fa:48 brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::7c0d:3ff:fe69:fa48/64 scope link
+       valid_lft forever preferred_lft forever
+----
+
+<1> Hledaná IP adresa je `10.38.6.0`.
+
+V sekci `[control]` nastavíme IP adresu `ctl` nodu.
+
+[source, cfg]
+----
+[control]
+# These hostname must be resolvable from your deployment host
+10.38.6.0
+----
+
+Dále nastavíme `cmp` nody.
+
+Jejich IP adresy získáme na příslušných uzlech příkazem `ip add`.
+
+**Log z terminálu**
+
+----
+root@pondepe1-cv3-cmp-1:~# ip add
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 02:00:0a:26:06:16 brd ff:ff:ff:ff:ff:ff
+    inet 10.38.6.22/22 brd 10.38.7.255 scope global ens3 #<1>
+       valid_lft forever preferred_lft forever
+    inet6 fe80::aff:fe26:616/64 scope link
+       valid_lft forever preferred_lft forever
+3: veth1@veth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 2e:b7:d4:75:5e:63 brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::2cb7:d4ff:fe75:5e63/64 scope link
+       valid_lft forever preferred_lft forever
+4: veth0@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 4e:99:d7:c3:9c:4a brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::4c99:d7ff:fec3:9c4a/64 scope link
+       valid_lft forever preferred_lft forever
+
+
+root@pondepe1-cv3-cmp-2:~# ip add
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 02:00:0a:26:06:5d brd ff:ff:ff:ff:ff:ff
+    inet 10.38.6.93/22 brd 10.38.7.255 scope global ens3 #<2>
+       valid_lft forever preferred_lft forever
+    inet6 fe80::aff:fe26:65d/64 scope link
+       valid_lft forever preferred_lft forever
+3: veth1@veth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 92:6d:4f:29:d6:f6 brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::906d:4fff:fe29:d6f6/64 scope link
+       valid_lft forever preferred_lft forever
+4: veth0@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 7e:84:ec:7d:8c:a2 brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::7c84:ecff:fe7d:8ca2/64 scope link
+       valid_lft forever preferred_lft forever
+----
+
+<1> IP adresa nodu `cmp-1` je `10.38.6.22`
+<2> IP adresa nodu `cmp-2` je `10.38.6.93`
+
+Node `ctl` nastavíme v inventory file jako network node. +
+Sekci `[network]` tedy nastavíme následovně:
+
+[source, cfg]
+----
+# The network nodes are where your l3-agent and loadbalancers will run
+# This can be the same as a host in the control group
+[network:children]
+control
+----
+
+Stejně nastavíme také monitoring (i když nasazovat ho nebudeme). +
+Sekci `[monitoring]` tedy nastavíme následovně:
+
+[source, cfg]
+----
+[monitoring:children]
+control
+----
+
+Storage nastavíme na `cmp` nody.
+Sekci `[storage]` tedy nastavíme následovně:
+
+[source, cfg]
+----
+[storage:children]
+compute
+----
+
+NOTE: Sekce `[deployment]` specifikuje deployment hosta.
+
+NOTE: Sekce `[common]` specifikuje společné služby - služby, které se nainstalují na všechny zadané cíle.
+
+Můžeme si všimnout, že nova se nainstaluje na nody ve třídě `[control]`:
+
+----
+[nova:children]
+control
+----
+
+Dále neutron se nainstaluje na nody ve třídě `[network]`:
+
+----
+[network:children]
+control
+----
+
+Všechny provedené změny v souboru `multinode`:
+
+[source, diff]
+----
+root@pondepe1-cv3-ctl:~# diff -u /usr/local/share/kolla-ansible/ansible/inventory/multinode multinode
+--- /usr/local/share/kolla-ansible/ansible/inventory/multinode  2021-04-02 09:54:04.285780775 +0000
++++ multinode   2021-04-02 12:27:29.181146238 +0000
+@@ -2,32 +2,30 @@
+# additional groups are for more control of the environment.
+[control]
+# These hostname must be resolvable from your deployment host
+-control01
+-control02
+-control03
++10.38.6.0 #<1>
+
+ # The above can also be specified as follows:
+ #control[01:03]     ansible_user=kolla
+
+ # The network nodes are where your l3-agent and loadbalancers will run
+ # This can be the same as a host in the control group
+-[network]
+-network01
+-network02
++[network:children]
++control
+
+ [compute]
+-compute01
++10.38.6.22 #<2>
++10.38.6.93 #<3>
+
+-[monitoring]
+-monitoring01
++[monitoring:children]
++control
+
+ # When compute nodes and control nodes use different interfaces,
+ # you need to comment out "api_interface" and other interfaces from the globals.yml
+ # and specify like below:
+ #compute01 neutron_external_interface=eth0 api_interface=em1 storage_interface=em1 tunnel_interface=em1
+
+-[storage]
+-storage01
++[storage:children]
++compute
+
+ [deployment]
+ localhost       ansible_connection=local
+----
+
+<1> IP adresa `ctl` nodu
+<2> IP adresa `cmp-1` nodu
+<3> IP adresa `cmp-2` nodu
+
+Ověříme, že `ctl` node komunikuje s oběma `cmp` nody.
+
+Výsledkem následujícího příkazu ansible API na `ctl` nodu by měly být čtyři úspěšné pingy:
+
+* `localhost` - `ctl` pingne sám sebe jako `localhost`
+* `10.38.6.0` - `ctl` pingne sám sebe pomocí IP adresy
+* `10.38.6.22` - `ctl` pingne `cmp-1`
+* `10.38.6.93` - `ctl` pingne `cmp-2`
+
+[source, bash]
+----
+ansible -i multinode all -m ping
+----
+
+**Log z terminálu**
+
+----
+root@pondepe1-cv3-ctl:~# ansible -i multinode all -m ping
+[DEPRECATION WARNING]: The TRANSFORM_INVALID_GROUP_CHARS settings is set to allow bad characters in group names by default, this will change, but still be user configurable on
+deprecation. This feature will be removed in version 2.10. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details
+[DEPRECATION WARNING]: Distribution Ubuntu 20.04 on host localhost should use /usr/bin/python3, but is using /usr/bin/python for backward compatibility with prior Ansible
+releases. A future Ansible release will default to using the discovered platform python for this host. See
+https://docs.ansible.com/ansible/2.9/reference_appendices/interpreter_discovery.html for more information. This feature will be removed in version 2.12. Deprecation warnings can
+be disabled by setting deprecation_warnings=False in ansible.cfg.
+localhost | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+[DEPRECATION WARNING]: Distribution Ubuntu 20.04 on host 10.38.6.22 should use /usr/bin/python3, but is using /usr/bin/python for backward compatibility with prior Ansible
+releases. A future Ansible release will default to using the discovered platform python for this host. See
+https://docs.ansible.com/ansible/2.9/reference_appendices/interpreter_discovery.html for more information. This feature will be removed in version 2.12. Deprecation warnings can
+be disabled by setting deprecation_warnings=False in ansible.cfg.
+10.38.6.22 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+[DEPRECATION WARNING]: Distribution Ubuntu 20.04 on host 10.38.6.0 should use /usr/bin/python3, but is using /usr/bin/python for backward compatibility with prior Ansible
+releases. A future Ansible release will default to using the discovered platform python for this host. See
+https://docs.ansible.com/ansible/2.9/reference_appendices/interpreter_discovery.html for more information. This feature will be removed in version 2.12. Deprecation warnings can
+be disabled by setting deprecation_warnings=False in ansible.cfg.
+10.38.6.0 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+[DEPRECATION WARNING]: Distribution Ubuntu 20.04 on host 10.38.6.93 should use /usr/bin/python3, but is using /usr/bin/python for backward compatibility with prior Ansible
+releases. A future Ansible release will default to using the discovered platform python for this host. See
+https://docs.ansible.com/ansible/2.9/reference_appendices/interpreter_discovery.html for more information. This feature will be removed in version 2.12. Deprecation warnings can
+be disabled by setting deprecation_warnings=False in ansible.cfg.
+10.38.6.93 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+----
+
+== Konfigurace Kolla passwords
+
+OpenStack je nasazován pomocí mikroslužeb. +
+Každá služba má vlastní databázi a uživatele v Keystone.
+
+Hesla, která jsou použita pro deployment, jsou uložena v souboru `/etc/kolla/passwords.yml`. +
+Ve výchozím stavu jsou všechna hesla v tomto souboru prázdná a musí být doplněna buď manuálně či náhodným generátorem hesel.
+
+Můžeme se podívat, že hesla nejsou vyplněna:
+
+----
+root@pondepe1-cv3-ctl:~# head /etc/kolla/passwords.yml
+---
+###################
+# External Ceph options
+####################
+# These options must be UUID4 values in string format
+# XXXXXXXX-XXXX-4XXX-XXXX-XXXXXXXXXXXX
+# for backward compatible consideration, rbd_secret_uuid is only used for nova,
+# cinder_rbd_secret_uuid is used for cinder
+rbd_secret_uuid:
+cinder_rbd_secret_uuid:
+----
+
+Pro vygenerování a nastavení hesel použijeme příkaz:
+
+[source, bash]
+----
+kolla-genpwd
+----
+
+Ověříme, že hesla byla úspěšně nastavena:
+
+----
+root@pondepe1-cv3-ctl:~# head /etc/kolla/passwords.yml
+aodh_database_password: CpDEJUakVsYkZcZYF3OqEfpur2NzDYn6W3TldfJt
+aodh_keystone_password: zAqEs7dIx2qbot1BhPc6NCatx3wrRe1M2EGKGMFJ
+barbican_crypto_key: c4puPgL9j9zRfu7DbKVt00avKvcKN5mkL01wp6cPcW4=
+barbican_database_password: VaNbTaPEcgf1PTyUOJoEILrpUi9rDuPlxv6iUyfC
+barbican_keystone_password: mAti51GRlweV0fhViYUu1ohBKKRIvnnoQfwzaJhM
+barbican_p11_password: 5m1g19YanTjOvfIgMxbUJ78z1G4cIVU4JMKRQXtj
+bifrost_ssh_key:
+  private_key: '-----BEGIN PRIVATE KEY-----
+
+    MIIJQwIBADANBgkqhkiG9w0BAQEFAASCCS0wggkpAgEAAoICAQD6FpUxfxXE5mOU
+----
+
+== Konfigurace Kolla globals
+
+TODO
