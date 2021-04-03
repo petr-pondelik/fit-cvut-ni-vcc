@@ -1,0 +1,880 @@
+root@pondepe1-cv3-ctl:~# kolla-ansible -i ./multinode deploy -e ansible_python_interpreter=/usr/bin/python3
+Deploying Playbooks : ansible-playbook -i ./multinode -e @/etc/kolla/globals.yml  -e @/etc/kolla/passwords.yml -e CONFIG_DIR=/etc/kolla  -e ansible_python_interpreter=/usr/bin/python3 -e kolla_action=deploy /usr/local/share/kolla-ansible/ansible/site.yml 
+[DEPRECATION WARNING]: The TRANSFORM_INVALID_GROUP_CHARS settings is set to allow bad characters in group names by default, this 
+will change, but still be user configurable on deprecation. This feature will be removed in version 2.10. Deprecation warnings can 
+be disabled by setting deprecation_warnings=False in ansible.cfg.
+[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details
+[WARNING]: Could not match supplied host pattern, ignoring: enable_nova_True
+
+PLAY [Gather facts for all hosts] ***************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************
+ok: [10.38.6.93]
+ok: [localhost]
+ok: [10.38.6.0]
+ok: [10.38.6.22]
+
+TASK [Group hosts to determine when using --limit] **********************************************************************************
+ok: [10.38.6.22]
+ok: [10.38.6.0]
+ok: [10.38.6.93]
+ok: [localhost]
+[WARNING]: Could not match supplied host pattern, ignoring: all_using_limit_True
+
+PLAY [Gather facts for all hosts (if using --limit)] ********************************************************************************
+skipping: no hosts matched
+
+PLAY [Group hosts based on configuration] *******************************************************************************************
+
+TASK [Group hosts based on Kolla action] ********************************************************************************************
+ok: [10.38.6.22]
+ok: [10.38.6.0]
+ok: [10.38.6.93]
+ok: [localhost]
+
+TASK [Group hosts based on enabled services] ****************************************************************************************
+ok: [10.38.6.22] => (item=enable_aodh_False)
+ok: [10.38.6.22] => (item=enable_barbican_False)
+ok: [10.38.6.22] => (item=enable_blazar_False)
+ok: [10.38.6.22] => (item=enable_ceilometer_False)
+ok: [10.38.6.22] => (item=enable_chrony_True)
+ok: [10.38.6.22] => (item=enable_cinder_False)
+ok: [10.38.6.0] => (item=enable_aodh_False)
+ok: [10.38.6.22] => (item=enable_cloudkitty_False)
+ok: [10.38.6.0] => (item=enable_barbican_False)
+ok: [10.38.6.93] => (item=enable_aodh_False)
+ok: [10.38.6.22] => (item=enable_collectd_False)
+ok: [10.38.6.0] => (item=enable_blazar_False)
+ok: [10.38.6.93] => (item=enable_barbican_False)
+ok: [localhost] => (item=enable_aodh_False)
+ok: [10.38.6.22] => (item=enable_cyborg_False)
+ok: [localhost] => (item=enable_barbican_False)
+ok: [10.38.6.93] => (item=enable_blazar_False)
+ok: [10.38.6.22] => (item=enable_designate_False)
+ok: [localhost] => (item=enable_blazar_False)
+ok: [10.38.6.93] => (item=enable_ceilometer_False)
+ok: [10.38.6.0] => (item=enable_ceilometer_False)
+ok: [10.38.6.22] => (item=enable_elasticsearch_False)
+ok: [localhost] => (item=enable_ceilometer_False)
+ok: [10.38.6.93] => (item=enable_chrony_True)
+ok: [10.38.6.22] => (item=enable_etcd_False)
+ok: [10.38.6.0] => (item=enable_chrony_True)
+ok: [localhost] => (item=enable_chrony_True)
+ok: [10.38.6.93] => (item=enable_cinder_False)
+ok: [10.38.6.22] => (item=enable_freezer_False)
+ok: [10.38.6.0] => (item=enable_cinder_False)
+ok: [localhost] => (item=enable_cinder_False)
+ok: [10.38.6.93] => (item=enable_cloudkitty_False)
+ok: [10.38.6.22] => (item=enable_glance_True)
+ok: [localhost] => (item=enable_cloudkitty_False)
+ok: [10.38.6.0] => (item=enable_cloudkitty_False)
+ok: [10.38.6.93] => (item=enable_collectd_False)
+ok: [10.38.6.22] => (item=enable_gnocchi_False)
+ok: [localhost] => (item=enable_collectd_False)
+ok: [10.38.6.0] => (item=enable_collectd_False)
+ok: [10.38.6.93] => (item=enable_cyborg_False)
+ok: [10.38.6.22] => (item=enable_grafana_False)
+ok: [localhost] => (item=enable_cyborg_False)
+ok: [10.38.6.0] => (item=enable_cyborg_False)
+ok: [localhost] => (item=enable_designate_False)
+ok: [10.38.6.93] => (item=enable_designate_False)
+ok: [10.38.6.22] => (item=enable_haproxy_False)
+ok: [10.38.6.0] => (item=enable_designate_False)
+ok: [localhost] => (item=enable_elasticsearch_False)
+ok: [10.38.6.93] => (item=enable_elasticsearch_False)
+ok: [10.38.6.22] => (item=enable_heat_True)
+ok: [10.38.6.0] => (item=enable_elasticsearch_False)
+ok: [localhost] => (item=enable_etcd_False)
+ok: [10.38.6.93] => (item=enable_etcd_False)
+ok: [10.38.6.22] => (item=enable_horizon_True)
+ok: [10.38.6.0] => (item=enable_etcd_False)
+ok: [localhost] => (item=enable_freezer_False)
+ok: [10.38.6.93] => (item=enable_freezer_False)
+ok: [10.38.6.22] => (item=enable_influxdb_False)
+ok: [10.38.6.0] => (item=enable_freezer_False)
+ok: [localhost] => (item=enable_glance_True)
+ok: [10.38.6.93] => (item=enable_glance_True)
+ok: [10.38.6.22] => (item=enable_ironic_False)
+ok: [10.38.6.0] => (item=enable_glance_True)
+ok: [localhost] => (item=enable_gnocchi_False)
+ok: [10.38.6.93] => (item=enable_gnocchi_False)
+ok: [10.38.6.22] => (item=enable_iscsid_False)
+ok: [10.38.6.0] => (item=enable_gnocchi_False)
+ok: [localhost] => (item=enable_grafana_False)
+ok: [10.38.6.93] => (item=enable_grafana_False)
+ok: [10.38.6.22] => (item=enable_kafka_False)
+ok: [localhost] => (item=enable_haproxy_False)
+ok: [10.38.6.0] => (item=enable_grafana_False)
+ok: [10.38.6.93] => (item=enable_haproxy_False)
+ok: [10.38.6.22] => (item=enable_karbor_False)
+ok: [localhost] => (item=enable_heat_True)
+ok: [10.38.6.0] => (item=enable_haproxy_False)
+ok: [10.38.6.93] => (item=enable_heat_True)
+ok: [localhost] => (item=enable_horizon_True)
+ok: [10.38.6.22] => (item=enable_keystone_True)
+ok: [10.38.6.0] => (item=enable_heat_True)
+ok: [localhost] => (item=enable_influxdb_False)
+ok: [10.38.6.93] => (item=enable_horizon_True)
+ok: [10.38.6.22] => (item=enable_kibana_False)
+ok: [10.38.6.0] => (item=enable_horizon_True)
+ok: [localhost] => (item=enable_ironic_False)
+ok: [10.38.6.93] => (item=enable_influxdb_False)
+ok: [10.38.6.22] => (item=enable_kuryr_False)
+ok: [10.38.6.0] => (item=enable_influxdb_False)
+ok: [localhost] => (item=enable_iscsid_False)
+ok: [10.38.6.93] => (item=enable_ironic_False)
+ok: [10.38.6.22] => (item=enable_magnum_False)
+ok: [10.38.6.0] => (item=enable_ironic_False)
+ok: [localhost] => (item=enable_kafka_False)
+ok: [10.38.6.93] => (item=enable_iscsid_False)
+ok: [10.38.6.22] => (item=enable_manila_False)
+ok: [10.38.6.0] => (item=enable_iscsid_False)
+ok: [localhost] => (item=enable_karbor_False)
+ok: [10.38.6.93] => (item=enable_kafka_False)
+ok: [10.38.6.22] => (item=enable_mariadb_True)
+ok: [localhost] => (item=enable_keystone_True)
+ok: [10.38.6.0] => (item=enable_kafka_False)
+ok: [10.38.6.93] => (item=enable_karbor_False)
+ok: [10.38.6.22] => (item=enable_masakari_False)
+ok: [localhost] => (item=enable_kibana_False)
+ok: [10.38.6.0] => (item=enable_karbor_False)
+ok: [10.38.6.93] => (item=enable_keystone_True)
+ok: [10.38.6.22] => (item=enable_memcached_True)
+ok: [localhost] => (item=enable_kuryr_False)
+ok: [10.38.6.0] => (item=enable_keystone_True)
+ok: [localhost] => (item=enable_magnum_False)
+ok: [10.38.6.93] => (item=enable_kibana_False)
+ok: [10.38.6.22] => (item=enable_mistral_False)
+ok: [10.38.6.0] => (item=enable_kibana_False)
+ok: [localhost] => (item=enable_manila_False)
+ok: [10.38.6.93] => (item=enable_kuryr_False)
+ok: [10.38.6.22] => (item=enable_monasca_False)
+ok: [10.38.6.0] => (item=enable_kuryr_False)
+ok: [localhost] => (item=enable_mariadb_True)
+ok: [10.38.6.93] => (item=enable_magnum_False)
+ok: [10.38.6.22] => (item=enable_multipathd_False)
+ok: [10.38.6.0] => (item=enable_magnum_False)
+ok: [10.38.6.93] => (item=enable_manila_False)
+ok: [10.38.6.22] => (item=enable_murano_False)
+ok: [localhost] => (item=enable_masakari_False)
+ok: [localhost] => (item=enable_memcached_True)
+ok: [10.38.6.0] => (item=enable_manila_False)
+ok: [10.38.6.93] => (item=enable_mariadb_True)
+ok: [localhost] => (item=enable_mistral_False)
+ok: [10.38.6.0] => (item=enable_mariadb_True)
+ok: [10.38.6.93] => (item=enable_masakari_False)
+ok: [localhost] => (item=enable_monasca_False)
+ok: [10.38.6.0] => (item=enable_masakari_False)
+ok: [10.38.6.22] => (item=enable_neutron_True)
+ok: [10.38.6.93] => (item=enable_memcached_True)
+ok: [localhost] => (item=enable_multipathd_False)
+ok: [10.38.6.0] => (item=enable_memcached_True)
+ok: [10.38.6.22] => (item=enable_nova_True)
+ok: [10.38.6.0] => (item=enable_mistral_False)
+ok: [10.38.6.22] => (item=enable_octavia_False)
+ok: [localhost] => (item=enable_murano_False)
+ok: [10.38.6.93] => (item=enable_mistral_False)
+ok: [localhost] => (item=enable_neutron_True)
+ok: [10.38.6.22] => (item=enable_openvswitch_True_enable_ovs_dpdk_False)
+ok: [10.38.6.0] => (item=enable_monasca_False)
+ok: [localhost] => (item=enable_nova_True)
+ok: [10.38.6.22] => (item=enable_outward_rabbitmq_False)
+ok: [localhost] => (item=enable_octavia_False)
+ok: [10.38.6.93] => (item=enable_monasca_False)
+ok: [10.38.6.22] => (item=enable_ovn_False)
+ok: [localhost] => (item=enable_openvswitch_True_enable_ovs_dpdk_False)
+ok: [10.38.6.0] => (item=enable_multipathd_False)
+ok: [10.38.6.93] => (item=enable_multipathd_False)
+ok: [localhost] => (item=enable_outward_rabbitmq_False)
+ok: [10.38.6.22] => (item=enable_panko_False)
+ok: [10.38.6.0] => (item=enable_murano_False)
+ok: [10.38.6.93] => (item=enable_murano_False)
+ok: [localhost] => (item=enable_ovn_False)
+ok: [10.38.6.22] => (item=enable_placement_True)
+ok: [10.38.6.0] => (item=enable_neutron_True)
+ok: [10.38.6.93] => (item=enable_neutron_True)
+ok: [localhost] => (item=enable_panko_False)
+ok: [10.38.6.22] => (item=enable_prometheus_False)
+ok: [10.38.6.0] => (item=enable_nova_True)
+ok: [10.38.6.93] => (item=enable_nova_True)
+ok: [localhost] => (item=enable_placement_True)
+ok: [10.38.6.22] => (item=enable_qdrouterd_False)
+ok: [10.38.6.0] => (item=enable_octavia_False)
+ok: [10.38.6.93] => (item=enable_octavia_False)
+ok: [localhost] => (item=enable_prometheus_False)
+ok: [10.38.6.22] => (item=enable_qinling_False)
+ok: [10.38.6.0] => (item=enable_openvswitch_True_enable_ovs_dpdk_False)
+ok: [10.38.6.93] => (item=enable_openvswitch_True_enable_ovs_dpdk_False)
+ok: [localhost] => (item=enable_qdrouterd_False)
+ok: [10.38.6.22] => (item=enable_rabbitmq_True)
+ok: [10.38.6.93] => (item=enable_outward_rabbitmq_False)
+ok: [10.38.6.0] => (item=enable_outward_rabbitmq_False)
+ok: [localhost] => (item=enable_qinling_False)
+ok: [10.38.6.22] => (item=enable_rally_False)
+ok: [localhost] => (item=enable_rabbitmq_True)
+ok: [10.38.6.0] => (item=enable_ovn_False)
+ok: [10.38.6.93] => (item=enable_ovn_False)
+ok: [10.38.6.22] => (item=enable_redis_False)
+ok: [localhost] => (item=enable_rally_False)
+ok: [10.38.6.0] => (item=enable_panko_False)
+ok: [10.38.6.93] => (item=enable_panko_False)
+ok: [10.38.6.22] => (item=enable_sahara_False)
+ok: [localhost] => (item=enable_redis_False)
+ok: [10.38.6.0] => (item=enable_placement_True)
+ok: [10.38.6.93] => (item=enable_placement_True)
+ok: [localhost] => (item=enable_sahara_False)
+ok: [10.38.6.22] => (item=enable_searchlight_False)
+ok: [10.38.6.93] => (item=enable_prometheus_False)
+ok: [localhost] => (item=enable_searchlight_False)
+ok: [10.38.6.22] => (item=enable_senlin_False)
+ok: [10.38.6.0] => (item=enable_prometheus_False)
+ok: [localhost] => (item=enable_senlin_False)
+ok: [10.38.6.22] => (item=enable_skydive_False)
+ok: [10.38.6.93] => (item=enable_qdrouterd_False)
+ok: [localhost] => (item=enable_skydive_False)
+ok: [10.38.6.22] => (item=enable_solum_False)
+ok: [10.38.6.93] => (item=enable_qinling_False)
+ok: [localhost] => (item=enable_solum_False)
+ok: [10.38.6.22] => (item=enable_storm_False)
+ok: [localhost] => (item=enable_storm_False)
+ok: [10.38.6.0] => (item=enable_qdrouterd_False)
+ok: [10.38.6.93] => (item=enable_rabbitmq_True)
+ok: [10.38.6.22] => (item=enable_swift_False)
+ok: [localhost] => (item=enable_swift_False)
+ok: [10.38.6.0] => (item=enable_qinling_False)
+ok: [10.38.6.93] => (item=enable_rally_False)
+ok: [10.38.6.22] => (item=enable_tacker_False)
+ok: [localhost] => (item=enable_tacker_False)
+ok: [10.38.6.93] => (item=enable_redis_False)
+ok: [10.38.6.0] => (item=enable_rabbitmq_True)
+ok: [localhost] => (item=enable_telegraf_False)
+ok: [10.38.6.22] => (item=enable_telegraf_False)
+ok: [10.38.6.0] => (item=enable_rally_False)
+ok: [10.38.6.93] => (item=enable_sahara_False)
+ok: [localhost] => (item=enable_tempest_False)
+ok: [10.38.6.22] => (item=enable_tempest_False)
+ok: [10.38.6.0] => (item=enable_redis_False)
+ok: [10.38.6.93] => (item=enable_searchlight_False)
+ok: [localhost] => (item=enable_trove_False)
+ok: [10.38.6.22] => (item=enable_trove_False)
+ok: [10.38.6.0] => (item=enable_sahara_False)
+ok: [10.38.6.93] => (item=enable_senlin_False)
+ok: [localhost] => (item=enable_vitrage_False)
+ok: [10.38.6.22] => (item=enable_vitrage_False)
+ok: [10.38.6.0] => (item=enable_searchlight_False)
+ok: [10.38.6.93] => (item=enable_skydive_False)
+ok: [localhost] => (item=enable_vmtp_False)
+ok: [10.38.6.22] => (item=enable_vmtp_False)
+ok: [10.38.6.0] => (item=enable_senlin_False)
+ok: [10.38.6.93] => (item=enable_solum_False)
+ok: [localhost] => (item=enable_watcher_False)
+ok: [10.38.6.22] => (item=enable_watcher_False)
+ok: [10.38.6.0] => (item=enable_skydive_False)
+ok: [10.38.6.93] => (item=enable_storm_False)
+ok: [localhost] => (item=enable_zookeeper_False)
+ok: [10.38.6.22] => (item=enable_zookeeper_False)
+ok: [10.38.6.0] => (item=enable_solum_False)
+ok: [localhost] => (item=enable_zun_False)
+ok: [10.38.6.93] => (item=enable_swift_False)
+ok: [10.38.6.22] => (item=enable_zun_False)
+ok: [10.38.6.0] => (item=enable_storm_False)
+ok: [10.38.6.93] => (item=enable_tacker_False)
+ok: [10.38.6.0] => (item=enable_swift_False)
+ok: [10.38.6.93] => (item=enable_telegraf_False)
+ok: [10.38.6.0] => (item=enable_tacker_False)
+ok: [10.38.6.93] => (item=enable_tempest_False)
+ok: [10.38.6.0] => (item=enable_telegraf_False)
+ok: [10.38.6.93] => (item=enable_trove_False)
+ok: [10.38.6.0] => (item=enable_tempest_False)
+ok: [10.38.6.93] => (item=enable_vitrage_False)
+ok: [10.38.6.0] => (item=enable_trove_False)
+ok: [10.38.6.93] => (item=enable_vmtp_False)
+ok: [10.38.6.0] => (item=enable_vitrage_False)
+ok: [10.38.6.93] => (item=enable_watcher_False)
+ok: [10.38.6.0] => (item=enable_vmtp_False)
+ok: [10.38.6.93] => (item=enable_zookeeper_False)
+ok: [10.38.6.0] => (item=enable_watcher_False)
+ok: [10.38.6.93] => (item=enable_zun_False)
+ok: [10.38.6.0] => (item=enable_zookeeper_False)
+ok: [10.38.6.0] => (item=enable_zun_False)
+[WARNING]: Could not match supplied host pattern, ignoring: kolla_action_precheck
+
+PLAY [Apply role prechecks] *********************************************************************************************************
+skipping: no hosts matched
+
+PLAY [Apply role common] ************************************************************************************************************
+
+TASK [common : include_tasks] *******************************************************************************************************
+included: /usr/local/share/kolla-ansible/ansible/roles/common/tasks/deploy.yml for 10.38.6.0, 10.38.6.22, 10.38.6.93
+
+TASK [common : Ensuring config directories exist] ***********************************************************************************
+changed: [10.38.6.93] => (item=[{'service_name': 'cron'}, 'cron'])
+changed: [10.38.6.0] => (item=[{'service_name': 'cron'}, 'cron'])
+changed: [10.38.6.93] => (item=[{'service_name': 'cron'}, 'cron/logrotate'])
+changed: [10.38.6.22] => (item=[{'service_name': 'cron'}, 'cron'])
+changed: [10.38.6.93] => (item=[{'service_name': 'fluentd'}, 'fluentd'])
+changed: [10.38.6.0] => (item=[{'service_name': 'cron'}, 'cron/logrotate'])
+changed: [10.38.6.93] => (item=[{'service_name': 'kolla-toolbox'}, 'kolla-toolbox'])
+changed: [10.38.6.0] => (item=[{'service_name': 'fluentd'}, 'fluentd'])
+changed: [10.38.6.0] => (item=[{'service_name': 'kolla-toolbox'}, 'kolla-toolbox'])
+changed: [10.38.6.22] => (item=[{'service_name': 'cron'}, 'cron/logrotate'])
+changed: [10.38.6.22] => (item=[{'service_name': 'fluentd'}, 'fluentd'])
+changed: [10.38.6.22] => (item=[{'service_name': 'kolla-toolbox'}, 'kolla-toolbox'])
+
+
+
+...
+
+
+
+skipping: [10.38.6.0] => (item={'key': 'neutron-sriov-agent', 'value': {'container_name': 'neutron_sriov_agent', 'image': 'kolla/ubuntu-source-neutron-sriov-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-sriov-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-sriov-nic-agent 5672'], 'timeout': '30'}}})                                                                
+skipping: [10.38.6.0] => (item={'key': 'neutron-mlnx-agent', 'value': {'container_name': 'neutron_mlnx_agent', 'image': 'kolla/ubuntu-source-neutron-mlnx-agent:victoria', 'enabled': False, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-mlnx-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                                                                                                    
+skipping: [10.38.6.0] => (item={'key': 'neutron-eswitchd', 'value': {'container_name': 'neutron_eswitchd', 'image': 'kolla/ubuntu-source-neutron-mlnx-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-eswitchd/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/run/libvirt:/run/libvirt:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                                                      
+skipping: [10.38.6.0] => (item={'key': 'neutron-metadata-agent', 'value': {'container_name': 'neutron_metadata_agent', 'image': 'kolla/ubuntu-source-neutron-metadata-agent:victoria', 'privileged': True, 'enabled': True, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-metadata-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-metadata-agent 5672'], 'timeout': '30'}}})    
+skipping: [10.38.6.0] => (item={'key': 'neutron-ovn-metadata-agent', 'value': {'container_name': 'neutron_ovn_metadata_agent', 'image': 'kolla/ubuntu-source-neutron-metadata-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-ovn-metadata-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/openvswitch:/run/openvswitch:shared', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port python 6642'], 'timeout': '30'}}})                                                                                                 
+skipping: [10.38.6.0] => (item={'key': 'neutron-bgp-dragent', 'value': {'container_name': 'neutron_bgp_dragent', 'image': 'kolla/ubuntu-source-neutron-bgp-dragent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-bgp-dragent', 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-bgp-dragent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                                                                 
+skipping: [10.38.6.0] => (item={'key': 'neutron-infoblox-ipam-agent', 'value': {'container_name': 'neutron_infoblox_ipam_agent', 'image': 'kolla/ubuntu-source-neutron-infoblox-ipam-agent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-infoblox-ipam-agent', 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-infoblox-ipam-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                         
+skipping: [10.38.6.0] => (item={'key': 'neutron-metering-agent', 'value': {'container_name': 'neutron_metering_agent', 'image': 'kolla/ubuntu-source-neutron-metering-agent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-metering-agent', 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-metering-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                              
+skipping: [10.38.6.0] => (item={'key': 'ironic-neutron-agent', 'value': {'container_name': 'ironic_neutron_agent', 'image': 'kolla/ubuntu-source-ironic-neutron-agent:victoria', 'privileged': False, 'enabled': False, 'group': 'ironic-neutron-agent', 'host_in_groups': True, 'volumes': ['/etc/kolla/ironic-neutron-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                                                           
+skipping: [10.38.6.0] => (item={'key': 'neutron-tls-proxy', 'value': {'container_name': 'neutron_tls_proxy', 'group': 'neutron-server', 'host_in_groups': True, 'enabled': 'no', 'image': 'kolla/ubuntu-source-haproxy:victoria', 'volumes': ['/etc/kolla/neutron-tls-proxy/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl -u openstack:YRnogpvnsXiuNrTKNX4ZSB4rKTgVy9iT5BYWqjhY 10.38.6.0:9697'], 'timeout': '30'}, 'haproxy': {'neutron_tls_proxy': {'enabled': False, 'mode': 'http', 'external': False, 'port': '9696', 'listen_port': '9696', 'tls_backend': 'yes'}, 'neutron_tls_proxy_external': {'enabled': False, 'mode': 'http', 'external': True, 'port': '9696', 'listen_port': '9696', 'tls_backend': 'yes'}}}})            
+
+TASK [neutron : Copying over linuxbridge_agent.ini] *********************************************************************************
+skipping: [10.38.6.0]
+skipping: [10.38.6.22]
+skipping: [10.38.6.93]
+
+TASK [neutron : Copying over openvswitch_agent.ini] *********************************************************************************
+changed: [10.38.6.93]
+changed: [10.38.6.22]
+changed: [10.38.6.0]
+
+TASK [neutron : Copying over sriov_agent.ini] ***************************************************************************************
+skipping: [10.38.6.0]
+skipping: [10.38.6.22]
+skipping: [10.38.6.93]
+
+TASK [neutron : Copying over mlnx_agent.ini] ****************************************************************************************
+skipping: [10.38.6.0]
+skipping: [10.38.6.22]
+skipping: [10.38.6.93]
+
+TASK [neutron : Copying over eswitchd.conf] *****************************************************************************************
+skipping: [10.38.6.0]
+skipping: [10.38.6.22]
+skipping: [10.38.6.93]
+
+TASK [neutron : Copying over dhcp_agent.ini] ****************************************************************************************
+skipping: [10.38.6.22]
+skipping: [10.38.6.93]
+changed: [10.38.6.0]
+
+TASK [neutron : Copying over dnsmasq.conf] ******************************************************************************************
+skipping: [10.38.6.22] => (item=/usr/local/share/kolla-ansible/ansible/roles/neutron/templates/dnsmasq.conf.j2) 
+skipping: [10.38.6.93] => (item=/usr/local/share/kolla-ansible/ansible/roles/neutron/templates/dnsmasq.conf.j2) 
+changed: [10.38.6.0] => (item=/usr/local/share/kolla-ansible/ansible/roles/neutron/templates/dnsmasq.conf.j2)
+
+TASK [neutron : Copying over l3_agent.ini] ******************************************************************************************
+skipping: [10.38.6.0] => (item={'key': 'neutron-server', 'value': {'container_name': 'neutron_server', 'image': 'kolla/ubuntu-source-neutron-server:victoria', 'enabled': True, 'group': 'neutron-server', 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-server/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.0:9696'], 'timeout': '30'}, 'haproxy': {'neutron_server': {'enabled': True, 'mode': 'http', 'external': False, 'port': '9696', 'listen_port': '9696'}, 'neutron_server_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '9696', 'listen_port': '9696'}}}})                                                                                                             
+skipping: [10.38.6.0] => (item={'key': 'neutron-openvswitch-agent', 'value': {'container_name': 'neutron_openvswitch_agent', 'image': 'kolla/ubuntu-source-neutron-openvswitch-agent:victoria', 'enabled': True, 'privileged': True, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-openvswitch-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', '/run/openvswitch:/run/openvswitch:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-openvswitch-agent 5672'], 'timeout': '30'}}})                                              
+skipping: [10.38.6.22] => (item={'key': 'neutron-server', 'value': {'container_name': 'neutron_server', 'image': 'kolla/ubuntu-source-neutron-server:victoria', 'enabled': True, 'group': 'neutron-server', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-server/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.22:9696'], 'timeout': '30'}, 'haproxy': {'neutron_server': {'enabled': True, 'mode': 'http', 'external': False, 'port': '9696', 'listen_port': '9696'}, 'neutron_server_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '9696', 'listen_port': '9696'}}}})                                                                                                          
+skipping: [10.38.6.0] => (item={'key': 'neutron-linuxbridge-agent', 'value': {'container_name': 'neutron_linuxbridge_agent', 'image': 'kolla/ubuntu-source-neutron-linuxbridge-agent:victoria', 'privileged': True, 'enabled': False, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-linuxbridge-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-linuxbridge-agent 5672'], 'timeout': '30'}}})                                                                                         
+skipping: [10.38.6.22] => (item={'key': 'neutron-openvswitch-agent', 'value': {'container_name': 'neutron_openvswitch_agent', 'image': 'kolla/ubuntu-source-neutron-openvswitch-agent:victoria', 'enabled': True, 'privileged': True, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-openvswitch-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', '/run/openvswitch:/run/openvswitch:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-openvswitch-agent 5672'], 'timeout': '30'}}})                                             
+skipping: [10.38.6.0] => (item={'key': 'neutron-dhcp-agent', 'value': {'container_name': 'neutron_dhcp_agent', 'image': 'kolla/ubuntu-source-neutron-dhcp-agent:victoria', 'privileged': True, 'enabled': True, 'group': 'neutron-dhcp-agent', 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-dhcp-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-dhcp-agent 5672'], 'timeout': '30'}}})                                                                                              
+skipping: [10.38.6.22] => (item={'key': 'neutron-linuxbridge-agent', 'value': {'container_name': 'neutron_linuxbridge_agent', 'image': 'kolla/ubuntu-source-neutron-linuxbridge-agent:victoria', 'privileged': True, 'enabled': False, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-linuxbridge-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-linuxbridge-agent 5672'], 'timeout': '30'}}})                                                                                        
+skipping: [10.38.6.93] => (item={'key': 'neutron-server', 'value': {'container_name': 'neutron_server', 'image': 'kolla/ubuntu-source-neutron-server:victoria', 'enabled': True, 'group': 'neutron-server', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-server/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.93:9696'], 'timeout': '30'}, 'haproxy': {'neutron_server': {'enabled': True, 'mode': 'http', 'external': False, 'port': '9696', 'listen_port': '9696'}, 'neutron_server_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '9696', 'listen_port': '9696'}}}})                                                                                                          
+skipping: [10.38.6.22] => (item={'key': 'neutron-dhcp-agent', 'value': {'container_name': 'neutron_dhcp_agent', 'image': 'kolla/ubuntu-source-neutron-dhcp-agent:victoria', 'privileged': True, 'enabled': True, 'group': 'neutron-dhcp-agent', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-dhcp-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-dhcp-agent 5672'], 'timeout': '30'}}})                                                                                            
+skipping: [10.38.6.93] => (item={'key': 'neutron-openvswitch-agent', 'value': {'container_name': 'neutron_openvswitch_agent', 'image': 'kolla/ubuntu-source-neutron-openvswitch-agent:victoria', 'enabled': True, 'privileged': True, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-openvswitch-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', '/run/openvswitch:/run/openvswitch:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-openvswitch-agent 5672'], 'timeout': '30'}}})                                             
+skipping: [10.38.6.93] => (item={'key': 'neutron-linuxbridge-agent', 'value': {'container_name': 'neutron_linuxbridge_agent', 'image': 'kolla/ubuntu-source-neutron-linuxbridge-agent:victoria', 'privileged': True, 'enabled': False, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-linuxbridge-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-linuxbridge-agent 5672'], 'timeout': '30'}}})                                                                                        
+skipping: [10.38.6.22] => (item={'key': 'neutron-l3-agent', 'value': {'container_name': 'neutron_l3_agent', 'image': 'kolla/ubuntu-source-neutron-l3-agent:victoria', 'privileged': True, 'enabled': True, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-l3-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', "healthcheck_port 'neutron-l3-agent ' 5672"], 'timeout': '30'}}})                                               
+skipping: [10.38.6.93] => (item={'key': 'neutron-dhcp-agent', 'value': {'container_name': 'neutron_dhcp_agent', 'image': 'kolla/ubuntu-source-neutron-dhcp-agent:victoria', 'privileged': True, 'enabled': True, 'group': 'neutron-dhcp-agent', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-dhcp-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-dhcp-agent 5672'], 'timeout': '30'}}})                                                                                            
+skipping: [10.38.6.22] => (item={'key': 'neutron-sriov-agent', 'value': {'container_name': 'neutron_sriov_agent', 'image': 'kolla/ubuntu-source-neutron-sriov-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-sriov-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-sriov-nic-agent 5672'], 'timeout': '30'}}})                                                                
+skipping: [10.38.6.22] => (item={'key': 'neutron-mlnx-agent', 'value': {'container_name': 'neutron_mlnx_agent', 'image': 'kolla/ubuntu-source-neutron-mlnx-agent:victoria', 'enabled': False, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-mlnx-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                                                                                                    
+skipping: [10.38.6.93] => (item={'key': 'neutron-l3-agent', 'value': {'container_name': 'neutron_l3_agent', 'image': 'kolla/ubuntu-source-neutron-l3-agent:victoria', 'privileged': True, 'enabled': True, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-l3-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', "healthcheck_port 'neutron-l3-agent ' 5672"], 'timeout': '30'}}})                                               
+skipping: [10.38.6.22] => (item={'key': 'neutron-eswitchd', 'value': {'container_name': 'neutron_eswitchd', 'image': 'kolla/ubuntu-source-neutron-mlnx-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-eswitchd/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/run/libvirt:/run/libvirt:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                                                      
+skipping: [10.38.6.93] => (item={'key': 'neutron-sriov-agent', 'value': {'container_name': 'neutron_sriov_agent', 'image': 'kolla/ubuntu-source-neutron-sriov-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-sriov-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-sriov-nic-agent 5672'], 'timeout': '30'}}})                                                                
+skipping: [10.38.6.22] => (item={'key': 'neutron-metadata-agent', 'value': {'container_name': 'neutron_metadata_agent', 'image': 'kolla/ubuntu-source-neutron-metadata-agent:victoria', 'privileged': True, 'enabled': True, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-metadata-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-metadata-agent 5672'], 'timeout': '30'}}})  
+skipping: [10.38.6.93] => (item={'key': 'neutron-mlnx-agent', 'value': {'container_name': 'neutron_mlnx_agent', 'image': 'kolla/ubuntu-source-neutron-mlnx-agent:victoria', 'enabled': False, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-mlnx-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                                                                                                    
+skipping: [10.38.6.22] => (item={'key': 'neutron-ovn-metadata-agent', 'value': {'container_name': 'neutron_ovn_metadata_agent', 'image': 'kolla/ubuntu-source-neutron-metadata-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-ovn-metadata-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/openvswitch:/run/openvswitch:shared', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port python 6642'], 'timeout': '30'}}})                                                                                                 
+skipping: [10.38.6.93] => (item={'key': 'neutron-eswitchd', 'value': {'container_name': 'neutron_eswitchd', 'image': 'kolla/ubuntu-source-neutron-mlnx-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-eswitchd/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/run/libvirt:/run/libvirt:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                                                      
+skipping: [10.38.6.22] => (item={'key': 'neutron-bgp-dragent', 'value': {'container_name': 'neutron_bgp_dragent', 'image': 'kolla/ubuntu-source-neutron-bgp-dragent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-bgp-dragent', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-bgp-dragent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                                                               
+skipping: [10.38.6.93] => (item={'key': 'neutron-metadata-agent', 'value': {'container_name': 'neutron_metadata_agent', 'image': 'kolla/ubuntu-source-neutron-metadata-agent:victoria', 'privileged': True, 'enabled': True, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-metadata-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-metadata-agent 5672'], 'timeout': '30'}}})  
+skipping: [10.38.6.22] => (item={'key': 'neutron-infoblox-ipam-agent', 'value': {'container_name': 'neutron_infoblox_ipam_agent', 'image': 'kolla/ubuntu-source-neutron-infoblox-ipam-agent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-infoblox-ipam-agent', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-infoblox-ipam-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                       
+skipping: [10.38.6.93] => (item={'key': 'neutron-ovn-metadata-agent', 'value': {'container_name': 'neutron_ovn_metadata_agent', 'image': 'kolla/ubuntu-source-neutron-metadata-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-ovn-metadata-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/openvswitch:/run/openvswitch:shared', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port python 6642'], 'timeout': '30'}}})                                                                                                 
+skipping: [10.38.6.22] => (item={'key': 'neutron-metering-agent', 'value': {'container_name': 'neutron_metering_agent', 'image': 'kolla/ubuntu-source-neutron-metering-agent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-metering-agent', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-metering-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                            
+skipping: [10.38.6.93] => (item={'key': 'neutron-bgp-dragent', 'value': {'container_name': 'neutron_bgp_dragent', 'image': 'kolla/ubuntu-source-neutron-bgp-dragent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-bgp-dragent', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-bgp-dragent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                                                               
+skipping: [10.38.6.22] => (item={'key': 'ironic-neutron-agent', 'value': {'container_name': 'ironic_neutron_agent', 'image': 'kolla/ubuntu-source-ironic-neutron-agent:victoria', 'privileged': False, 'enabled': False, 'group': 'ironic-neutron-agent', 'host_in_groups': False, 'volumes': ['/etc/kolla/ironic-neutron-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                                                         
+skipping: [10.38.6.93] => (item={'key': 'neutron-infoblox-ipam-agent', 'value': {'container_name': 'neutron_infoblox_ipam_agent', 'image': 'kolla/ubuntu-source-neutron-infoblox-ipam-agent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-infoblox-ipam-agent', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-infoblox-ipam-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                       
+skipping: [10.38.6.22] => (item={'key': 'neutron-tls-proxy', 'value': {'container_name': 'neutron_tls_proxy', 'group': 'neutron-server', 'host_in_groups': False, 'enabled': 'no', 'image': 'kolla/ubuntu-source-haproxy:victoria', 'volumes': ['/etc/kolla/neutron-tls-proxy/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl -u openstack:YRnogpvnsXiuNrTKNX4ZSB4rKTgVy9iT5BYWqjhY 10.38.6.22:9697'], 'timeout': '30'}, 'haproxy': {'neutron_tls_proxy': {'enabled': False, 'mode': 'http', 'external': False, 'port': '9696', 'listen_port': '9696', 'tls_backend': 'yes'}, 'neutron_tls_proxy_external': {'enabled': False, 'mode': 'http', 'external': True, 'port': '9696', 'listen_port': '9696', 'tls_backend': 'yes'}}}})         
+skipping: [10.38.6.93] => (item={'key': 'neutron-metering-agent', 'value': {'container_name': 'neutron_metering_agent', 'image': 'kolla/ubuntu-source-neutron-metering-agent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-metering-agent', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-metering-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                            
+skipping: [10.38.6.93] => (item={'key': 'ironic-neutron-agent', 'value': {'container_name': 'ironic_neutron_agent', 'image': 'kolla/ubuntu-source-ironic-neutron-agent:victoria', 'privileged': False, 'enabled': False, 'group': 'ironic-neutron-agent', 'host_in_groups': False, 'volumes': ['/etc/kolla/ironic-neutron-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                                                         
+skipping: [10.38.6.93] => (item={'key': 'neutron-tls-proxy', 'value': {'container_name': 'neutron_tls_proxy', 'group': 'neutron-server', 'host_in_groups': False, 'enabled': 'no', 'image': 'kolla/ubuntu-source-haproxy:victoria', 'volumes': ['/etc/kolla/neutron-tls-proxy/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl -u openstack:YRnogpvnsXiuNrTKNX4ZSB4rKTgVy9iT5BYWqjhY 10.38.6.93:9697'], 'timeout': '30'}, 'haproxy': {'neutron_tls_proxy': {'enabled': False, 'mode': 'http', 'external': False, 'port': '9696', 'listen_port': '9696', 'tls_backend': 'yes'}, 'neutron_tls_proxy_external': {'enabled': False, 'mode': 'http', 'external': True, 'port': '9696', 'listen_port': '9696', 'tls_backend': 'yes'}}}})         
+changed: [10.38.6.0] => (item={'key': 'neutron-l3-agent', 'value': {'container_name': 'neutron_l3_agent', 'image': 'kolla/ubuntu-source-neutron-l3-agent:victoria', 'privileged': True, 'enabled': True, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-l3-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', "healthcheck_port 'neutron-l3-agent ' 5672"], 'timeout': '30'}}})                                                  
+skipping: [10.38.6.0] => (item={'key': 'neutron-sriov-agent', 'value': {'container_name': 'neutron_sriov_agent', 'image': 'kolla/ubuntu-source-neutron-sriov-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-sriov-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-sriov-nic-agent 5672'], 'timeout': '30'}}})                                                                
+skipping: [10.38.6.0] => (item={'key': 'neutron-mlnx-agent', 'value': {'container_name': 'neutron_mlnx_agent', 'image': 'kolla/ubuntu-source-neutron-mlnx-agent:victoria', 'enabled': False, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-mlnx-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                                                                                                    
+skipping: [10.38.6.0] => (item={'key': 'neutron-eswitchd', 'value': {'container_name': 'neutron_eswitchd', 'image': 'kolla/ubuntu-source-neutron-mlnx-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-eswitchd/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/run/libvirt:/run/libvirt:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                                                      
+skipping: [10.38.6.0] => (item={'key': 'neutron-metadata-agent', 'value': {'container_name': 'neutron_metadata_agent', 'image': 'kolla/ubuntu-source-neutron-metadata-agent:victoria', 'privileged': True, 'enabled': True, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-metadata-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-metadata-agent 5672'], 'timeout': '30'}}})    
+skipping: [10.38.6.0] => (item={'key': 'neutron-ovn-metadata-agent', 'value': {'container_name': 'neutron_ovn_metadata_agent', 'image': 'kolla/ubuntu-source-neutron-metadata-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-ovn-metadata-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/openvswitch:/run/openvswitch:shared', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port python 6642'], 'timeout': '30'}}})                                                                                                 
+skipping: [10.38.6.0] => (item={'key': 'neutron-bgp-dragent', 'value': {'container_name': 'neutron_bgp_dragent', 'image': 'kolla/ubuntu-source-neutron-bgp-dragent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-bgp-dragent', 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-bgp-dragent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                                                                 
+skipping: [10.38.6.0] => (item={'key': 'neutron-infoblox-ipam-agent', 'value': {'container_name': 'neutron_infoblox_ipam_agent', 'image': 'kolla/ubuntu-source-neutron-infoblox-ipam-agent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-infoblox-ipam-agent', 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-infoblox-ipam-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                         
+skipping: [10.38.6.0] => (item={'key': 'neutron-metering-agent', 'value': {'container_name': 'neutron_metering_agent', 'image': 'kolla/ubuntu-source-neutron-metering-agent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-metering-agent', 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-metering-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                              
+skipping: [10.38.6.0] => (item={'key': 'ironic-neutron-agent', 'value': {'container_name': 'ironic_neutron_agent', 'image': 'kolla/ubuntu-source-ironic-neutron-agent:victoria', 'privileged': False, 'enabled': False, 'group': 'ironic-neutron-agent', 'host_in_groups': True, 'volumes': ['/etc/kolla/ironic-neutron-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                                                           
+skipping: [10.38.6.0] => (item={'key': 'neutron-tls-proxy', 'value': {'container_name': 'neutron_tls_proxy', 'group': 'neutron-server', 'host_in_groups': True, 'enabled': 'no', 'image': 'kolla/ubuntu-source-haproxy:victoria', 'volumes': ['/etc/kolla/neutron-tls-proxy/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl -u openstack:YRnogpvnsXiuNrTKNX4ZSB4rKTgVy9iT5BYWqjhY 10.38.6.0:9697'], 'timeout': '30'}, 'haproxy': {'neutron_tls_proxy': {'enabled': False, 'mode': 'http', 'external': False, 'port': '9696', 'listen_port': '9696', 'tls_backend': 'yes'}, 'neutron_tls_proxy_external': {'enabled': False, 'mode': 'http', 'external': True, 'port': '9696', 'listen_port': '9696', 'tls_backend': 'yes'}}}})            
+
+TASK [neutron : Copying over metadata_agent.ini] ************************************************************************************
+skipping: [10.38.6.22]
+skipping: [10.38.6.93]
+changed: [10.38.6.0]
+
+TASK [neutron : Copying over neutron_ovn_metadata_agent.ini] ************************************************************************
+skipping: [10.38.6.0]
+skipping: [10.38.6.22]
+skipping: [10.38.6.93]
+
+TASK [neutron : Copying over metering_agent.ini] ************************************************************************************
+skipping: [10.38.6.0]
+skipping: [10.38.6.22]
+skipping: [10.38.6.93]
+
+TASK [neutron : Copying over ironic_neutron_agent.ini] ******************************************************************************
+skipping: [10.38.6.0]
+skipping: [10.38.6.22]
+skipping: [10.38.6.93]
+
+TASK [neutron : Copying over bgp_dragent.ini] ***************************************************************************************
+skipping: [10.38.6.0]
+skipping: [10.38.6.22]
+skipping: [10.38.6.93]
+
+TASK [neutron : Copying over nsx.ini] ***********************************************************************************************
+skipping: [10.38.6.22]
+skipping: [10.38.6.0]
+skipping: [10.38.6.93]
+
+TASK [neutron : Copy neutron-l3-agent-wrapper script] *******************************************************************************
+skipping: [10.38.6.22]
+skipping: [10.38.6.93]
+changed: [10.38.6.0]
+
+TASK [neutron : Copying over extra ml2 plugins] *************************************************************************************
+
+TASK [neutron : Copying over neutron-tls-proxy.cfg] *********************************************************************************
+skipping: [10.38.6.0] => (item=/usr/local/share/kolla-ansible/ansible/roles/neutron/templates/neutron-tls-proxy.cfg.j2) 
+skipping: [10.38.6.22] => (item=/usr/local/share/kolla-ansible/ansible/roles/neutron/templates/neutron-tls-proxy.cfg.j2) 
+skipping: [10.38.6.93] => (item=/usr/local/share/kolla-ansible/ansible/roles/neutron/templates/neutron-tls-proxy.cfg.j2) 
+
+TASK [neutron : Check neutron containers] *******************************************************************************************
+skipping: [10.38.6.22] => (item={'key': 'neutron-server', 'value': {'container_name': 'neutron_server', 'image': 'kolla/ubuntu-source-neutron-server:victoria', 'enabled': True, 'group': 'neutron-server', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-server/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.22:9696'], 'timeout': '30'}, 'haproxy': {'neutron_server': {'enabled': True, 'mode': 'http', 'external': False, 'port': '9696', 'listen_port': '9696'}, 'neutron_server_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '9696', 'listen_port': '9696'}}}})                                                                                                          
+skipping: [10.38.6.93] => (item={'key': 'neutron-server', 'value': {'container_name': 'neutron_server', 'image': 'kolla/ubuntu-source-neutron-server:victoria', 'enabled': True, 'group': 'neutron-server', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-server/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.93:9696'], 'timeout': '30'}, 'haproxy': {'neutron_server': {'enabled': True, 'mode': 'http', 'external': False, 'port': '9696', 'listen_port': '9696'}, 'neutron_server_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '9696', 'listen_port': '9696'}}}})                                                                                                          
+changed: [10.38.6.93] => (item={'key': 'neutron-openvswitch-agent', 'value': {'container_name': 'neutron_openvswitch_agent', 'image': 'kolla/ubuntu-source-neutron-openvswitch-agent:victoria', 'enabled': True, 'privileged': True, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-openvswitch-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', '/run/openvswitch:/run/openvswitch:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-openvswitch-agent 5672'], 'timeout': '30'}}})                                              
+skipping: [10.38.6.93] => (item={'key': 'neutron-linuxbridge-agent', 'value': {'container_name': 'neutron_linuxbridge_agent', 'image': 'kolla/ubuntu-source-neutron-linuxbridge-agent:victoria', 'privileged': True, 'enabled': False, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-linuxbridge-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-linuxbridge-agent 5672'], 'timeout': '30'}}})                                                                                        
+skipping: [10.38.6.93] => (item={'key': 'neutron-dhcp-agent', 'value': {'container_name': 'neutron_dhcp_agent', 'image': 'kolla/ubuntu-source-neutron-dhcp-agent:victoria', 'privileged': True, 'enabled': True, 'group': 'neutron-dhcp-agent', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-dhcp-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-dhcp-agent 5672'], 'timeout': '30'}}})                                                                                            
+changed: [10.38.6.22] => (item={'key': 'neutron-openvswitch-agent', 'value': {'container_name': 'neutron_openvswitch_agent', 'image': 'kolla/ubuntu-source-neutron-openvswitch-agent:victoria', 'enabled': True, 'privileged': True, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-openvswitch-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', '/run/openvswitch:/run/openvswitch:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-openvswitch-agent 5672'], 'timeout': '30'}}})                                              
+skipping: [10.38.6.93] => (item={'key': 'neutron-l3-agent', 'value': {'container_name': 'neutron_l3_agent', 'image': 'kolla/ubuntu-source-neutron-l3-agent:victoria', 'privileged': True, 'enabled': True, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-l3-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', "healthcheck_port 'neutron-l3-agent ' 5672"], 'timeout': '30'}}})                                               
+skipping: [10.38.6.22] => (item={'key': 'neutron-linuxbridge-agent', 'value': {'container_name': 'neutron_linuxbridge_agent', 'image': 'kolla/ubuntu-source-neutron-linuxbridge-agent:victoria', 'privileged': True, 'enabled': False, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-linuxbridge-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-linuxbridge-agent 5672'], 'timeout': '30'}}})                                                                                        
+skipping: [10.38.6.93] => (item={'key': 'neutron-sriov-agent', 'value': {'container_name': 'neutron_sriov_agent', 'image': 'kolla/ubuntu-source-neutron-sriov-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-sriov-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-sriov-nic-agent 5672'], 'timeout': '30'}}})                                                                
+skipping: [10.38.6.22] => (item={'key': 'neutron-dhcp-agent', 'value': {'container_name': 'neutron_dhcp_agent', 'image': 'kolla/ubuntu-source-neutron-dhcp-agent:victoria', 'privileged': True, 'enabled': True, 'group': 'neutron-dhcp-agent', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-dhcp-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-dhcp-agent 5672'], 'timeout': '30'}}})                                                                                            
+skipping: [10.38.6.93] => (item={'key': 'neutron-mlnx-agent', 'value': {'container_name': 'neutron_mlnx_agent', 'image': 'kolla/ubuntu-source-neutron-mlnx-agent:victoria', 'enabled': False, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-mlnx-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                                                                                                    
+skipping: [10.38.6.22] => (item={'key': 'neutron-l3-agent', 'value': {'container_name': 'neutron_l3_agent', 'image': 'kolla/ubuntu-source-neutron-l3-agent:victoria', 'privileged': True, 'enabled': True, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-l3-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', "healthcheck_port 'neutron-l3-agent ' 5672"], 'timeout': '30'}}})                                               
+skipping: [10.38.6.93] => (item={'key': 'neutron-eswitchd', 'value': {'container_name': 'neutron_eswitchd', 'image': 'kolla/ubuntu-source-neutron-mlnx-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-eswitchd/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/run/libvirt:/run/libvirt:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                                                      
+skipping: [10.38.6.22] => (item={'key': 'neutron-sriov-agent', 'value': {'container_name': 'neutron_sriov_agent', 'image': 'kolla/ubuntu-source-neutron-sriov-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-sriov-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-sriov-nic-agent 5672'], 'timeout': '30'}}})                                                                
+skipping: [10.38.6.93] => (item={'key': 'neutron-metadata-agent', 'value': {'container_name': 'neutron_metadata_agent', 'image': 'kolla/ubuntu-source-neutron-metadata-agent:victoria', 'privileged': True, 'enabled': True, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-metadata-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-metadata-agent 5672'], 'timeout': '30'}}})  
+skipping: [10.38.6.22] => (item={'key': 'neutron-mlnx-agent', 'value': {'container_name': 'neutron_mlnx_agent', 'image': 'kolla/ubuntu-source-neutron-mlnx-agent:victoria', 'enabled': False, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-mlnx-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                                                                                                    
+skipping: [10.38.6.93] => (item={'key': 'neutron-ovn-metadata-agent', 'value': {'container_name': 'neutron_ovn_metadata_agent', 'image': 'kolla/ubuntu-source-neutron-metadata-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-ovn-metadata-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/openvswitch:/run/openvswitch:shared', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port python 6642'], 'timeout': '30'}}})                                                                                                 
+skipping: [10.38.6.22] => (item={'key': 'neutron-eswitchd', 'value': {'container_name': 'neutron_eswitchd', 'image': 'kolla/ubuntu-source-neutron-mlnx-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-eswitchd/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/run/libvirt:/run/libvirt:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                                                      
+skipping: [10.38.6.93] => (item={'key': 'neutron-bgp-dragent', 'value': {'container_name': 'neutron_bgp_dragent', 'image': 'kolla/ubuntu-source-neutron-bgp-dragent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-bgp-dragent', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-bgp-dragent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                                                               
+skipping: [10.38.6.22] => (item={'key': 'neutron-metadata-agent', 'value': {'container_name': 'neutron_metadata_agent', 'image': 'kolla/ubuntu-source-neutron-metadata-agent:victoria', 'privileged': True, 'enabled': True, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-metadata-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-metadata-agent 5672'], 'timeout': '30'}}})  
+skipping: [10.38.6.93] => (item={'key': 'neutron-infoblox-ipam-agent', 'value': {'container_name': 'neutron_infoblox_ipam_agent', 'image': 'kolla/ubuntu-source-neutron-infoblox-ipam-agent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-infoblox-ipam-agent', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-infoblox-ipam-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                       
+skipping: [10.38.6.22] => (item={'key': 'neutron-ovn-metadata-agent', 'value': {'container_name': 'neutron_ovn_metadata_agent', 'image': 'kolla/ubuntu-source-neutron-metadata-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-ovn-metadata-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/openvswitch:/run/openvswitch:shared', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port python 6642'], 'timeout': '30'}}})                                                                                                 
+skipping: [10.38.6.93] => (item={'key': 'neutron-metering-agent', 'value': {'container_name': 'neutron_metering_agent', 'image': 'kolla/ubuntu-source-neutron-metering-agent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-metering-agent', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-metering-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                            
+skipping: [10.38.6.22] => (item={'key': 'neutron-bgp-dragent', 'value': {'container_name': 'neutron_bgp_dragent', 'image': 'kolla/ubuntu-source-neutron-bgp-dragent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-bgp-dragent', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-bgp-dragent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                                                               
+skipping: [10.38.6.93] => (item={'key': 'ironic-neutron-agent', 'value': {'container_name': 'ironic_neutron_agent', 'image': 'kolla/ubuntu-source-ironic-neutron-agent:victoria', 'privileged': False, 'enabled': False, 'group': 'ironic-neutron-agent', 'host_in_groups': False, 'volumes': ['/etc/kolla/ironic-neutron-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                                                         
+skipping: [10.38.6.22] => (item={'key': 'neutron-infoblox-ipam-agent', 'value': {'container_name': 'neutron_infoblox_ipam_agent', 'image': 'kolla/ubuntu-source-neutron-infoblox-ipam-agent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-infoblox-ipam-agent', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-infoblox-ipam-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                       
+skipping: [10.38.6.93] => (item={'key': 'neutron-tls-proxy', 'value': {'container_name': 'neutron_tls_proxy', 'group': 'neutron-server', 'host_in_groups': False, 'enabled': 'no', 'image': 'kolla/ubuntu-source-haproxy:victoria', 'volumes': ['/etc/kolla/neutron-tls-proxy/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl -u openstack:YRnogpvnsXiuNrTKNX4ZSB4rKTgVy9iT5BYWqjhY 10.38.6.93:9697'], 'timeout': '30'}, 'haproxy': {'neutron_tls_proxy': {'enabled': False, 'mode': 'http', 'external': False, 'port': '9696', 'listen_port': '9696', 'tls_backend': 'yes'}, 'neutron_tls_proxy_external': {'enabled': False, 'mode': 'http', 'external': True, 'port': '9696', 'listen_port': '9696', 'tls_backend': 'yes'}}}})         
+skipping: [10.38.6.22] => (item={'key': 'neutron-metering-agent', 'value': {'container_name': 'neutron_metering_agent', 'image': 'kolla/ubuntu-source-neutron-metering-agent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-metering-agent', 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-metering-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                            
+skipping: [10.38.6.22] => (item={'key': 'ironic-neutron-agent', 'value': {'container_name': 'ironic_neutron_agent', 'image': 'kolla/ubuntu-source-ironic-neutron-agent:victoria', 'privileged': False, 'enabled': False, 'group': 'ironic-neutron-agent', 'host_in_groups': False, 'volumes': ['/etc/kolla/ironic-neutron-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                                                         
+changed: [10.38.6.0] => (item={'key': 'neutron-server', 'value': {'container_name': 'neutron_server', 'image': 'kolla/ubuntu-source-neutron-server:victoria', 'enabled': True, 'group': 'neutron-server', 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-server/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.0:9696'], 'timeout': '30'}, 'haproxy': {'neutron_server': {'enabled': True, 'mode': 'http', 'external': False, 'port': '9696', 'listen_port': '9696'}, 'neutron_server_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '9696', 'listen_port': '9696'}}}})                                                                                                              
+skipping: [10.38.6.22] => (item={'key': 'neutron-tls-proxy', 'value': {'container_name': 'neutron_tls_proxy', 'group': 'neutron-server', 'host_in_groups': False, 'enabled': 'no', 'image': 'kolla/ubuntu-source-haproxy:victoria', 'volumes': ['/etc/kolla/neutron-tls-proxy/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl -u openstack:YRnogpvnsXiuNrTKNX4ZSB4rKTgVy9iT5BYWqjhY 10.38.6.22:9697'], 'timeout': '30'}, 'haproxy': {'neutron_tls_proxy': {'enabled': False, 'mode': 'http', 'external': False, 'port': '9696', 'listen_port': '9696', 'tls_backend': 'yes'}, 'neutron_tls_proxy_external': {'enabled': False, 'mode': 'http', 'external': True, 'port': '9696', 'listen_port': '9696', 'tls_backend': 'yes'}}}})         
+changed: [10.38.6.0] => (item={'key': 'neutron-openvswitch-agent', 'value': {'container_name': 'neutron_openvswitch_agent', 'image': 'kolla/ubuntu-source-neutron-openvswitch-agent:victoria', 'enabled': True, 'privileged': True, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-openvswitch-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', '/run/openvswitch:/run/openvswitch:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-openvswitch-agent 5672'], 'timeout': '30'}}})                                               
+skipping: [10.38.6.0] => (item={'key': 'neutron-linuxbridge-agent', 'value': {'container_name': 'neutron_linuxbridge_agent', 'image': 'kolla/ubuntu-source-neutron-linuxbridge-agent:victoria', 'privileged': True, 'enabled': False, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-linuxbridge-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-linuxbridge-agent 5672'], 'timeout': '30'}}})                                                                                         
+changed: [10.38.6.0] => (item={'key': 'neutron-dhcp-agent', 'value': {'container_name': 'neutron_dhcp_agent', 'image': 'kolla/ubuntu-source-neutron-dhcp-agent:victoria', 'privileged': True, 'enabled': True, 'group': 'neutron-dhcp-agent', 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-dhcp-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-dhcp-agent 5672'], 'timeout': '30'}}})                                                                                               
+changed: [10.38.6.0] => (item={'key': 'neutron-l3-agent', 'value': {'container_name': 'neutron_l3_agent', 'image': 'kolla/ubuntu-source-neutron-l3-agent:victoria', 'privileged': True, 'enabled': True, 'environment': {'KOLLA_LEGACY_IPTABLES': 'false'}, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-l3-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '/lib/modules:/lib/modules:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', "healthcheck_port 'neutron-l3-agent ' 5672"], 'timeout': '30'}}})                                                  
+skipping: [10.38.6.0] => (item={'key': 'neutron-sriov-agent', 'value': {'container_name': 'neutron_sriov_agent', 'image': 'kolla/ubuntu-source-neutron-sriov-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-sriov-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-sriov-nic-agent 5672'], 'timeout': '30'}}})                                                                
+skipping: [10.38.6.0] => (item={'key': 'neutron-mlnx-agent', 'value': {'container_name': 'neutron_mlnx_agent', 'image': 'kolla/ubuntu-source-neutron-mlnx-agent:victoria', 'enabled': False, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-mlnx-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                                                                                                    
+skipping: [10.38.6.0] => (item={'key': 'neutron-eswitchd', 'value': {'container_name': 'neutron_eswitchd', 'image': 'kolla/ubuntu-source-neutron-mlnx-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-eswitchd/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/run/libvirt:/run/libvirt:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                                                      
+changed: [10.38.6.0] => (item={'key': 'neutron-metadata-agent', 'value': {'container_name': 'neutron_metadata_agent', 'image': 'kolla/ubuntu-source-neutron-metadata-agent:victoria', 'privileged': True, 'enabled': True, 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-metadata-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port neutron-metadata-agent 5672'], 'timeout': '30'}}})     
+skipping: [10.38.6.0] => (item={'key': 'neutron-ovn-metadata-agent', 'value': {'container_name': 'neutron_ovn_metadata_agent', 'image': 'kolla/ubuntu-source-neutron-metadata-agent:victoria', 'privileged': True, 'enabled': False, 'host_in_groups': False, 'volumes': ['/etc/kolla/neutron-ovn-metadata-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', 'neutron_metadata_socket:/var/lib/neutron/kolla/', '/run/openvswitch:/run/openvswitch:shared', '/run/netns:/run/netns:shared', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port python 6642'], 'timeout': '30'}}})                                                                                                 
+skipping: [10.38.6.0] => (item={'key': 'neutron-bgp-dragent', 'value': {'container_name': 'neutron_bgp_dragent', 'image': 'kolla/ubuntu-source-neutron-bgp-dragent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-bgp-dragent', 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-bgp-dragent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                                                                 
+skipping: [10.38.6.0] => (item={'key': 'neutron-infoblox-ipam-agent', 'value': {'container_name': 'neutron_infoblox_ipam_agent', 'image': 'kolla/ubuntu-source-neutron-infoblox-ipam-agent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-infoblox-ipam-agent', 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-infoblox-ipam-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                         
+skipping: [10.38.6.0] => (item={'key': 'neutron-metering-agent', 'value': {'container_name': 'neutron_metering_agent', 'image': 'kolla/ubuntu-source-neutron-metering-agent:victoria', 'privileged': True, 'enabled': False, 'group': 'neutron-metering-agent', 'host_in_groups': True, 'volumes': ['/etc/kolla/neutron-metering-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', ''], 'dimensions': {}}})                                              
+skipping: [10.38.6.0] => (item={'key': 'ironic-neutron-agent', 'value': {'container_name': 'ironic_neutron_agent', 'image': 'kolla/ubuntu-source-ironic-neutron-agent:victoria', 'privileged': False, 'enabled': False, 'group': 'ironic-neutron-agent', 'host_in_groups': True, 'volumes': ['/etc/kolla/ironic-neutron-agent/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}}})                                                           
+skipping: [10.38.6.0] => (item={'key': 'neutron-tls-proxy', 'value': {'container_name': 'neutron_tls_proxy', 'group': 'neutron-server', 'host_in_groups': True, 'enabled': 'no', 'image': 'kolla/ubuntu-source-haproxy:victoria', 'volumes': ['/etc/kolla/neutron-tls-proxy/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl -u openstack:YRnogpvnsXiuNrTKNX4ZSB4rKTgVy9iT5BYWqjhY 10.38.6.0:9697'], 'timeout': '30'}, 'haproxy': {'neutron_tls_proxy': {'enabled': False, 'mode': 'http', 'external': False, 'port': '9696', 'listen_port': '9696', 'tls_backend': 'yes'}, 'neutron_tls_proxy_external': {'enabled': False, 'mode': 'http', 'external': True, 'port': '9696', 'listen_port': '9696', 'tls_backend': 'yes'}}}})            
+
+TASK [neutron : include_tasks] ******************************************************************************************************
+skipping: [10.38.6.0]
+skipping: [10.38.6.22]
+skipping: [10.38.6.93]
+
+TASK [neutron : Creating Neutron database] ******************************************************************************************
+changed: [10.38.6.0 -> 10.38.6.0]
+
+TASK [neutron : Creating Neutron database user and setting permissions] *************************************************************
+changed: [10.38.6.0 -> 10.38.6.0]
+
+TASK [neutron : Running Neutron bootstrap container] ********************************************************************************
+changed: [10.38.6.0 -> 10.38.6.0]
+
+RUNNING HANDLER [neutron : Restart neutron-server container] ************************************************************************
+changed: [10.38.6.0]
+
+RUNNING HANDLER [neutron : Restart neutron-openvswitch-agent container] *************************************************************
+changed: [10.38.6.0]
+changed: [10.38.6.93]
+changed: [10.38.6.22]
+
+RUNNING HANDLER [neutron : Restart neutron-dhcp-agent container] ********************************************************************
+changed: [10.38.6.0]
+
+RUNNING HANDLER [neutron : Restart neutron-l3-agent container] **********************************************************************
+changed: [10.38.6.0]
+
+RUNNING HANDLER [neutron : Restart neutron-metadata-agent container] ****************************************************************
+changed: [10.38.6.0]
+[WARNING]: Could not match supplied host pattern, ignoring: enable_kuryr_True
+
+PLAY [Apply role kuryr] *************************************************************************************************************
+skipping: no hosts matched
+
+PLAY [Apply role heat] **************************************************************************************************************
+
+TASK [heat : include_tasks] *********************************************************************************************************
+included: /usr/local/share/kolla-ansible/ansible/roles/heat/tasks/deploy.yml for 10.38.6.0
+
+TASK [service-ks-register : heat | Creating services] *******************************************************************************
+changed: [10.38.6.0] => (item={'name': 'heat', 'service_type': 'orchestration'})
+changed: [10.38.6.0] => (item={'name': 'heat-cfn', 'service_type': 'cloudformation'})
+
+TASK [service-ks-register : heat | Creating endpoints] ******************************************************************************
+changed: [10.38.6.0] => (item={'service': 'heat', 'url': 'http://10.38.6.0:8004/v1/%(tenant_id)s', 'interface': 'admin'})
+changed: [10.38.6.0] => (item={'service': 'heat', 'url': 'http://10.38.6.0:8004/v1/%(tenant_id)s', 'interface': 'internal'})
+changed: [10.38.6.0] => (item={'service': 'heat', 'url': 'http://10.38.6.0:8004/v1/%(tenant_id)s', 'interface': 'public'})
+changed: [10.38.6.0] => (item={'service': 'heat-cfn', 'url': 'http://10.38.6.0:8000/v1', 'interface': 'admin'})
+changed: [10.38.6.0] => (item={'service': 'heat-cfn', 'url': 'http://10.38.6.0:8000/v1', 'interface': 'internal'})
+changed: [10.38.6.0] => (item={'service': 'heat-cfn', 'url': 'http://10.38.6.0:8000/v1', 'interface': 'public'})
+
+TASK [service-ks-register : heat | Creating projects] *******************************************************************************
+ok: [10.38.6.0] => (item=service)
+
+TASK [service-ks-register : heat | Creating users] **********************************************************************************
+changed: [10.38.6.0] => (item={'user': 'heat', 'project': 'service'})
+
+TASK [service-ks-register : heat | Creating roles] **********************************************************************************
+ok: [10.38.6.0] => (item=admin)
+changed: [10.38.6.0] => (item=heat_stack_owner)
+changed: [10.38.6.0] => (item=heat_stack_user)
+
+TASK [service-ks-register : heat | Granting user roles] *****************************************************************************
+changed: [10.38.6.0] => (item={'user': 'heat', 'role': 'admin', 'project': 'service'})
+changed: [10.38.6.0] => (item={'user': 'admin', 'role': 'heat_stack_owner', 'project': 'admin'})
+
+TASK [heat : Ensuring config directories exist] *************************************************************************************
+changed: [10.38.6.0] => (item={'key': 'heat-api', 'value': {'container_name': 'heat_api', 'group': 'heat-api', 'enabled': True, 'image': 'kolla/ubuntu-source-heat-api:victoria', 'volumes': ['/etc/kolla/heat-api/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.0:8004'], 'timeout': '30'}, 'haproxy': {'heat_api': {'enabled': True, 'mode': 'http', 'external': False, 'port': '8004', 'listen_port': '8004', 'tls_backend': 'no'}, 'heat_api_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '8004', 'listen_port': '8004', 'tls_backend': 'no'}}}}) 
+changed: [10.38.6.0] => (item={'key': 'heat-api-cfn', 'value': {'container_name': 'heat_api_cfn', 'group': 'heat-api-cfn', 'enabled': True, 'image': 'kolla/ubuntu-source-heat-api-cfn:victoria', 'volumes': ['/etc/kolla/heat-api-cfn/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.0:8000'], 'timeout': '30'}, 'haproxy': {'heat_api_cfn': {'enabled': True, 'mode': 'http', 'external': False, 'port': '8000', 'listen_port': '8000', 'tls_backend': 'no'}, 'heat_api_cfn_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '8000', 'listen_port': '8000', 'tls_backend': 'no'}}}})                                                                                                          
+changed: [10.38.6.0] => (item={'key': 'heat-engine', 'value': {'container_name': 'heat_engine', 'group': 'heat-engine', 'enabled': True, 'image': 'kolla/ubuntu-source-heat-engine:victoria', 'volumes': ['/etc/kolla/heat-engine/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port heat-engine 5672'], 'timeout': '30'}}})                                                                                                                                   
+
+TASK [heat : Check if policies shall be overwritten] ********************************************************************************
+
+TASK [heat : Set heat policy file] **************************************************************************************************
+skipping: [10.38.6.0]
+
+TASK [heat : include_tasks] *********************************************************************************************************
+skipping: [10.38.6.0]
+
+TASK [heat : Copying over config.json files for services] ***************************************************************************
+changed: [10.38.6.0] => (item={'key': 'heat-api', 'value': {'container_name': 'heat_api', 'group': 'heat-api', 'enabled': True, 'image': 'kolla/ubuntu-source-heat-api:victoria', 'volumes': ['/etc/kolla/heat-api/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.0:8004'], 'timeout': '30'}, 'haproxy': {'heat_api': {'enabled': True, 'mode': 'http', 'external': False, 'port': '8004', 'listen_port': '8004', 'tls_backend': 'no'}, 'heat_api_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '8004', 'listen_port': '8004', 'tls_backend': 'no'}}}}) 
+changed: [10.38.6.0] => (item={'key': 'heat-api-cfn', 'value': {'container_name': 'heat_api_cfn', 'group': 'heat-api-cfn', 'enabled': True, 'image': 'kolla/ubuntu-source-heat-api-cfn:victoria', 'volumes': ['/etc/kolla/heat-api-cfn/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.0:8000'], 'timeout': '30'}, 'haproxy': {'heat_api_cfn': {'enabled': True, 'mode': 'http', 'external': False, 'port': '8000', 'listen_port': '8000', 'tls_backend': 'no'}, 'heat_api_cfn_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '8000', 'listen_port': '8000', 'tls_backend': 'no'}}}})                                                                                                          
+changed: [10.38.6.0] => (item={'key': 'heat-engine', 'value': {'container_name': 'heat_engine', 'group': 'heat-engine', 'enabled': True, 'image': 'kolla/ubuntu-source-heat-engine:victoria', 'volumes': ['/etc/kolla/heat-engine/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port heat-engine 5672'], 'timeout': '30'}}})                                                                                                                                   
+
+TASK [heat : Copying over heat.conf] ************************************************************************************************
+changed: [10.38.6.0] => (item={'key': 'heat-api', 'value': {'container_name': 'heat_api', 'group': 'heat-api', 'enabled': True, 'image': 'kolla/ubuntu-source-heat-api:victoria', 'volumes': ['/etc/kolla/heat-api/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.0:8004'], 'timeout': '30'}, 'haproxy': {'heat_api': {'enabled': True, 'mode': 'http', 'external': False, 'port': '8004', 'listen_port': '8004', 'tls_backend': 'no'}, 'heat_api_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '8004', 'listen_port': '8004', 'tls_backend': 'no'}}}}) 
+changed: [10.38.6.0] => (item={'key': 'heat-api-cfn', 'value': {'container_name': 'heat_api_cfn', 'group': 'heat-api-cfn', 'enabled': True, 'image': 'kolla/ubuntu-source-heat-api-cfn:victoria', 'volumes': ['/etc/kolla/heat-api-cfn/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.0:8000'], 'timeout': '30'}, 'haproxy': {'heat_api_cfn': {'enabled': True, 'mode': 'http', 'external': False, 'port': '8000', 'listen_port': '8000', 'tls_backend': 'no'}, 'heat_api_cfn_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '8000', 'listen_port': '8000', 'tls_backend': 'no'}}}})                                                                                                          
+changed: [10.38.6.0] => (item={'key': 'heat-engine', 'value': {'container_name': 'heat_engine', 'group': 'heat-engine', 'enabled': True, 'image': 'kolla/ubuntu-source-heat-engine:victoria', 'volumes': ['/etc/kolla/heat-engine/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port heat-engine 5672'], 'timeout': '30'}}})                                                                                                                                   
+
+TASK [heat : Copying over existing policy file] *************************************************************************************
+skipping: [10.38.6.0] => (item={'key': 'heat-api', 'value': {'container_name': 'heat_api', 'group': 'heat-api', 'enabled': True, 'image': 'kolla/ubuntu-source-heat-api:victoria', 'volumes': ['/etc/kolla/heat-api/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.0:8004'], 'timeout': '30'}, 'haproxy': {'heat_api': {'enabled': True, 'mode': 'http', 'external': False, 'port': '8004', 'listen_port': '8004', 'tls_backend': 'no'}, 'heat_api_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '8004', 'listen_port': '8004', 'tls_backend': 'no'}}}})                                                                                                                                     
+skipping: [10.38.6.0] => (item={'key': 'heat-api-cfn', 'value': {'container_name': 'heat_api_cfn', 'group': 'heat-api-cfn', 'enabled': True, 'image': 'kolla/ubuntu-source-heat-api-cfn:victoria', 'volumes': ['/etc/kolla/heat-api-cfn/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.0:8000'], 'timeout': '30'}, 'haproxy': {'heat_api_cfn': {'enabled': True, 'mode': 'http', 'external': False, 'port': '8000', 'listen_port': '8000', 'tls_backend': 'no'}, 'heat_api_cfn_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '8000', 'listen_port': '8000', 'tls_backend': 'no'}}}})                                                                                                         
+skipping: [10.38.6.0] => (item={'key': 'heat-engine', 'value': {'container_name': 'heat_engine', 'group': 'heat-engine', 'enabled': True, 'image': 'kolla/ubuntu-source-heat-engine:victoria', 'volumes': ['/etc/kolla/heat-engine/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port heat-engine 5672'], 'timeout': '30'}}})                                                                                                                                  
+
+TASK [heat : Copying over heat-api wsgi config] *************************************************************************************
+changed: [10.38.6.0]
+
+TASK [heat : Copying over heat-api-cfn wsgi config] *********************************************************************************
+changed: [10.38.6.0]
+
+TASK [heat : Check heat containers] *************************************************************************************************
+changed: [10.38.6.0] => (item={'key': 'heat-api', 'value': {'container_name': 'heat_api', 'group': 'heat-api', 'enabled': True, 'image': 'kolla/ubuntu-source-heat-api:victoria', 'volumes': ['/etc/kolla/heat-api/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.0:8004'], 'timeout': '30'}, 'haproxy': {'heat_api': {'enabled': True, 'mode': 'http', 'external': False, 'port': '8004', 'listen_port': '8004', 'tls_backend': 'no'}, 'heat_api_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '8004', 'listen_port': '8004', 'tls_backend': 'no'}}}}) 
+changed: [10.38.6.0] => (item={'key': 'heat-api-cfn', 'value': {'container_name': 'heat_api_cfn', 'group': 'heat-api-cfn', 'enabled': True, 'image': 'kolla/ubuntu-source-heat-api-cfn:victoria', 'volumes': ['/etc/kolla/heat-api-cfn/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.0:8000'], 'timeout': '30'}, 'haproxy': {'heat_api_cfn': {'enabled': True, 'mode': 'http', 'external': False, 'port': '8000', 'listen_port': '8000', 'tls_backend': 'no'}, 'heat_api_cfn_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '8000', 'listen_port': '8000', 'tls_backend': 'no'}}}})                                                                                                          
+changed: [10.38.6.0] => (item={'key': 'heat-engine', 'value': {'container_name': 'heat_engine', 'group': 'heat-engine', 'enabled': True, 'image': 'kolla/ubuntu-source-heat-engine:victoria', 'volumes': ['/etc/kolla/heat-engine/:/var/lib/kolla/config_files/:ro', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', '', 'kolla_logs:/var/log/kolla/'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_port heat-engine 5672'], 'timeout': '30'}}})                                                                                                                                   
+
+TASK [heat : include_tasks] *********************************************************************************************************
+skipping: [10.38.6.0]
+
+TASK [heat : Creating Heat database] ************************************************************************************************
+changed: [10.38.6.0 -> 10.38.6.0]
+
+TASK [heat : Creating Heat database user and setting permissions] *******************************************************************
+changed: [10.38.6.0 -> 10.38.6.0]
+
+TASK [heat : Running Heat bootstrap container] **************************************************************************************
+changed: [10.38.6.0 -> 10.38.6.0]
+
+RUNNING HANDLER [heat : Restart heat-api container] *********************************************************************************
+changed: [10.38.6.0]
+
+RUNNING HANDLER [heat : Restart heat-api-cfn container] *****************************************************************************
+changed: [10.38.6.0]
+
+RUNNING HANDLER [heat : Restart heat-engine container] ******************************************************************************
+changed: [10.38.6.0]
+
+PLAY [Apply role horizon] ***********************************************************************************************************
+
+TASK [horizon : include_tasks] ******************************************************************************************************
+included: /usr/local/share/kolla-ansible/ansible/roles/horizon/tasks/deploy.yml for 10.38.6.0
+
+TASK [horizon : Ensuring config directories exist] **********************************************************************************
+changed: [10.38.6.0] => (item={'key': 'horizon', 'value': {'container_name': 'horizon', 'group': 'horizon', 'enabled': True, 'image': 'kolla/ubuntu-source-horizon:victoria', 'environment': {'ENABLE_BLAZAR': 'no', 'ENABLE_CLOUDKITTY': 'no', 'ENABLE_DESIGNATE': 'no', 'ENABLE_FREEZER': 'no', 'ENABLE_HEAT': 'yes', 'ENABLE_IRONIC': 'no', 'ENABLE_KARBOR': 'no', 'ENABLE_MAGNUM': 'no', 'ENABLE_MANILA': 'no', 'ENABLE_MASAKARI': 'no', 'ENABLE_MISTRAL': 'no', 'ENABLE_MONASCA': 'no', 'ENABLE_MURANO': 'no', 'ENABLE_NEUTRON_VPNAAS': 'no', 'ENABLE_OCTAVIA': 'no', 'ENABLE_QINLING': 'no', 'ENABLE_SAHARA': 'no', 'ENABLE_SEARCHLIGHT': 'no', 'ENABLE_SENLIN': 'no', 'ENABLE_SOLUM': 'no', 'ENABLE_TACKER': 'no', 'ENABLE_TROVE': 'no', 'ENABLE_VITRAGE': 'no', 'ENABLE_WATCHER': 'no', 'ENABLE_ZUN': 'no', 'FORCE_GENERATE': 'no'}, 'volumes': ['/etc/kolla/horizon/:/var/lib/kolla/config_files/:ro', '', '', '', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', '/tmp:/tmp'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.0:80'], 'timeout': '30'}, 'haproxy': {'horizon': {'enabled': True, 'mode': 'http', 'external': False, 'port': '80', 'listen_port': '80', 'frontend_http_extra': ['use_backend acme_client_back if { path_reg ^/.well-known/acme-challenge/.+ }'], 'backend_http_extra': ['balance source'], 'tls_backend': 'no'}, 'horizon_redirect': {'enabled': False, 'mode': 'redirect', 'external': False, 'port': '80', 'listen_port': '80'}, 'horizon_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '80', 'listen_port': '80', 'frontend_http_extra': ['use_backend acme_client_back if { path_reg ^/.well-known/acme-challenge/.+ }'], 'backend_http_extra': ['balance source'], 'tls_backend': 'no'}, 'horizon_external_redirect': {'enabled': False, 'mode': 'redirect', 'external': True, 'port': '80', 'listen_port': '80'}, 'acme_client': {'enabled': True, 'with_frontend': False, 'custom_member_list': []}}}})                                                                          
+
+TASK [horizon : Set empty custom policy] ********************************************************************************************
+ok: [10.38.6.0]
+
+TASK [horizon : include_tasks] ******************************************************************************************************
+skipping: [10.38.6.0] => (item={'name': 'ceilometer', 'enabled': 'no'}) 
+skipping: [10.38.6.0] => (item={'name': 'cinder', 'enabled': 'no'}) 
+skipping: [10.38.6.0] => (item={'name': 'cloudkitty', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'designate', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'freezer', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'ironic', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'karbor', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'magnum', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'manila', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'masakari', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'mistral', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'monasca', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'murano', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'octavia', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'qinling', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'sahara', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'searchlight', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'senlin', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'solum', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'tacker', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'trove', 'enabled': False}) 
+skipping: [10.38.6.0] => (item={'name': 'watcher', 'enabled': False}) 
+included: /usr/local/share/kolla-ansible/ansible/roles/horizon/tasks/policy_item.yml for 10.38.6.0
+included: /usr/local/share/kolla-ansible/ansible/roles/horizon/tasks/policy_item.yml for 10.38.6.0
+included: /usr/local/share/kolla-ansible/ansible/roles/horizon/tasks/policy_item.yml for 10.38.6.0
+included: /usr/local/share/kolla-ansible/ansible/roles/horizon/tasks/policy_item.yml for 10.38.6.0
+included: /usr/local/share/kolla-ansible/ansible/roles/horizon/tasks/policy_item.yml for 10.38.6.0
+
+TASK [horizon : Update policy file name] ********************************************************************************************
+ok: [10.38.6.0]
+
+TASK [horizon : Check if policies shall be overwritten] *****************************************************************************
+
+TASK [horizon : Update custom policy file name] *************************************************************************************
+skipping: [10.38.6.0]
+
+TASK [horizon : Update policy file name] ********************************************************************************************
+ok: [10.38.6.0]
+
+TASK [horizon : Check if policies shall be overwritten] *****************************************************************************
+
+TASK [horizon : Update custom policy file name] *************************************************************************************
+skipping: [10.38.6.0]
+
+TASK [horizon : Update policy file name] ********************************************************************************************
+ok: [10.38.6.0]
+
+TASK [horizon : Check if policies shall be overwritten] *****************************************************************************
+
+TASK [horizon : Update custom policy file name] *************************************************************************************
+skipping: [10.38.6.0]
+
+TASK [horizon : Update policy file name] ********************************************************************************************
+ok: [10.38.6.0]
+
+TASK [horizon : Check if policies shall be overwritten] *****************************************************************************
+
+TASK [horizon : Update custom policy file name] *************************************************************************************
+skipping: [10.38.6.0]
+
+TASK [horizon : Update policy file name] ********************************************************************************************
+ok: [10.38.6.0]
+
+TASK [horizon : Check if policies shall be overwritten] *****************************************************************************
+
+TASK [horizon : Update custom policy file name] *************************************************************************************
+skipping: [10.38.6.0]
+
+TASK [horizon : Copying over config.json files for services] ************************************************************************
+changed: [10.38.6.0]
+
+TASK [horizon : Copying over horizon.conf] ******************************************************************************************
+changed: [10.38.6.0] => (item=/usr/local/share/kolla-ansible/ansible/roles/horizon/templates/horizon.conf.j2)
+
+TASK [horizon : Copying over local_settings] ****************************************************************************************
+changed: [10.38.6.0] => (item=/usr/local/share/kolla-ansible/ansible/roles/horizon/templates/local_settings.j2)
+
+TASK [horizon : Copying over custom_local_settings] *********************************************************************************
+changed: [10.38.6.0] => (item=/usr/local/share/kolla-ansible/ansible/roles/horizon/templates/custom_local_settings.j2)
+
+TASK [horizon : Copying over existing policy file] **********************************************************************************
+
+TASK [horizon : include_tasks] ******************************************************************************************************
+skipping: [10.38.6.0]
+
+TASK [horizon : Deploy horizon container] *******************************************************************************************
+changed: [10.38.6.0] => (item={'key': 'horizon', 'value': {'container_name': 'horizon', 'group': 'horizon', 'enabled': True, 'image': 'kolla/ubuntu-source-horizon:victoria', 'environment': {'ENABLE_BLAZAR': 'no', 'ENABLE_CLOUDKITTY': 'no', 'ENABLE_DESIGNATE': 'no', 'ENABLE_FREEZER': 'no', 'ENABLE_HEAT': 'yes', 'ENABLE_IRONIC': 'no', 'ENABLE_KARBOR': 'no', 'ENABLE_MAGNUM': 'no', 'ENABLE_MANILA': 'no', 'ENABLE_MASAKARI': 'no', 'ENABLE_MISTRAL': 'no', 'ENABLE_MONASCA': 'no', 'ENABLE_MURANO': 'no', 'ENABLE_NEUTRON_VPNAAS': 'no', 'ENABLE_OCTAVIA': 'no', 'ENABLE_QINLING': 'no', 'ENABLE_SAHARA': 'no', 'ENABLE_SEARCHLIGHT': 'no', 'ENABLE_SENLIN': 'no', 'ENABLE_SOLUM': 'no', 'ENABLE_TACKER': 'no', 'ENABLE_TROVE': 'no', 'ENABLE_VITRAGE': 'no', 'ENABLE_WATCHER': 'no', 'ENABLE_ZUN': 'no', 'FORCE_GENERATE': 'no'}, 'volumes': ['/etc/kolla/horizon/:/var/lib/kolla/config_files/:ro', '', '', '', '/etc/localtime:/etc/localtime:ro', '/etc/timezone:/etc/timezone:ro', 'kolla_logs:/var/log/kolla/', '/tmp:/tmp'], 'dimensions': {}, 'healthcheck': {'interval': '30', 'retries': '3', 'start_period': '5', 'test': ['CMD-SHELL', 'healthcheck_curl http://10.38.6.0:80'], 'timeout': '30'}, 'haproxy': {'horizon': {'enabled': True, 'mode': 'http', 'external': False, 'port': '80', 'listen_port': '80', 'frontend_http_extra': ['use_backend acme_client_back if { path_reg ^/.well-known/acme-challenge/.+ }'], 'backend_http_extra': ['balance source'], 'tls_backend': 'no'}, 'horizon_redirect': {'enabled': False, 'mode': 'redirect', 'external': False, 'port': '80', 'listen_port': '80'}, 'horizon_external': {'enabled': True, 'mode': 'http', 'external': True, 'port': '80', 'listen_port': '80', 'frontend_http_extra': ['use_backend acme_client_back if { path_reg ^/.well-known/acme-challenge/.+ }'], 'backend_http_extra': ['balance source'], 'tls_backend': 'no'}, 'horizon_external_redirect': {'enabled': False, 'mode': 'redirect', 'external': True, 'port': '80', 'listen_port': '80'}, 'acme_client': {'enabled': True, 'with_frontend': False, 'custom_member_list': []}}}})                                                                          
+
+TASK [horizon : include_tasks] ******************************************************************************************************
+skipping: [10.38.6.0]
+
+TASK [horizon : include_tasks] ******************************************************************************************************
+skipping: [10.38.6.0]
+
+RUNNING HANDLER [horizon : Restart horizon container] *******************************************************************************
+changed: [10.38.6.0]
+[WARNING]: Could not match supplied host pattern, ignoring: enable_murano_True
+
+PLAY [Apply role murano] ************************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_solum_True
+
+PLAY [Apply role solum] *************************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_magnum_True
+
+PLAY [Apply role magnum] ************************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_mistral_True
+
+PLAY [Apply role mistral] ***********************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_qinling_True
+
+PLAY [Apply role qinling] ***********************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_sahara_True
+
+PLAY [Apply role sahara] ************************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_panko_True
+
+PLAY [Apply role panko] *************************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_manila_True
+
+PLAY [Apply role manila] ************************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_gnocchi_True
+
+PLAY [Apply role gnocchi] ***********************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_ceilometer_True
+
+PLAY [Apply role ceilometer] ********************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_monasca_True
+
+PLAY [Apply role monasca] ***********************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_aodh_True
+
+PLAY [Apply role aodh] **************************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_barbican_True
+
+PLAY [Apply role barbican] **********************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_cyborg_True
+
+PLAY [Apply role cyborg] ************************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_tempest_True
+
+PLAY [Apply role tempest] ***********************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_designate_True
+
+PLAY [Apply role designate] *********************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_rally_True
+
+PLAY [Apply role rally] *************************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_vmtp_True
+
+PLAY [Apply role vmtp] **************************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_trove_True
+
+PLAY [Apply role trove] *************************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_watcher_True
+
+PLAY [Apply role watcher] ***********************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_grafana_True
+
+PLAY [Apply role grafana] ***********************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_cloudkitty_True
+
+PLAY [Apply role cloudkitty] ********************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_freezer_True
+
+PLAY [Apply role freezer] ***********************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_senlin_True
+
+PLAY [Apply role senlin] ************************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_searchlight_True
+
+PLAY [Apply role searchlight] *******************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_tacker_True
+
+PLAY [Apply role tacker] ************************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_octavia_True
+
+PLAY [Apply role octavia] ***********************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_zun_True
+
+PLAY [Apply role zun] ***************************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_skydive_True
+
+PLAY [Apply role skydive] ***********************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_vitrage_True
+
+PLAY [Apply role vitrage] ***********************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_blazar_True
+
+PLAY [Apply role blazar] ************************************************************************************************************
+skipping: no hosts matched
+[WARNING]: Could not match supplied host pattern, ignoring: enable_masakari_True
+
+PLAY [Apply role masakari] **********************************************************************************************************
+skipping: no hosts matched
+
+PLAY RECAP **************************************************************************************************************************
+10.38.6.0                  : ok=262  changed=183  unreachable=0    failed=0    skipped=122  rescued=0    ignored=1   
+10.38.6.22                 : ok=69   changed=47   unreachable=0    failed=0    skipped=44   rescued=0    ignored=0   
+10.38.6.93                 : ok=63   changed=47   unreachable=0    failed=0    skipped=44   rescued=0    ignored=0   
+localhost                  : ok=4    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   

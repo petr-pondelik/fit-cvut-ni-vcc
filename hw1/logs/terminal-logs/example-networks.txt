@@ -1,0 +1,353 @@
+root@pondepe1-cv3-ctl:~# /usr/local/share/kolla-ansible/init-runonce
+Checking for locally available cirros image.
+None found, downloading cirros image.
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   636  100   636    0     0   2814      0 --:--:-- --:--:-- --:--:--  2814
+100 15.5M  100 15.5M    0     0  7110k      0  0:00:02  0:00:02 --:--:-- 8853k
+Creating glance image.
++------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Field            | Value                                                                                                                                                       |
++------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| container_format | bare                                                                                                                                                        |
+| created_at       | 2021-04-03T16:19:52Z                                                                                                                                        |
+| disk_format      | qcow2                                                                                                                                                       |
+| file             | /v2/images/752a9ca3-8ec7-4fa6-af2e-6725fcdf334f/file                                                                                                        |
+| id               | 752a9ca3-8ec7-4fa6-af2e-6725fcdf334f                                                                                                                        |
+| min_disk         | 0                                                                                                                                                           |
+| min_ram          | 0                                                                                                                                                           |
+| name             | cirros                                                                                                                                                      |
+| owner            | 2763d47c0d9f46f4bffdacf833473520                                                                                                                            |
+| properties       | os_hidden='False', os_type='linux', owner_specified.openstack.md5='', owner_specified.openstack.object='images/cirros', owner_specified.openstack.sha256='' |
+| protected        | False                                                                                                                                                       |
+| schema           | /v2/schemas/image                                                                                                                                           |
+| status           | queued                                                                                                                                                      |
+| tags             |                                                                                                                                                             |
+| updated_at       | 2021-04-03T16:19:52Z                                                                                                                                        |
+| visibility       | public                                                                                                                                                      |
++------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+Configuring neutron.
++-------------------------+--------------------------------------+
+| Field                   | Value                                |
++-------------------------+--------------------------------------+
+| admin_state_up          | UP                                   |
+| availability_zone_hints |                                      |
+| availability_zones      |                                      |
+| created_at              | 2021-04-03T16:19:55Z                 |
+| description             |                                      |
+| distributed             | False                                |
+| external_gateway_info   | null                                 |
+| flavor_id               | None                                 |
+| ha                      | False                                |
+| id                      | 74d66fc6-0173-4846-a241-edce5dc6571c |
+| name                    | demo-router                          |
+| project_id              | 2763d47c0d9f46f4bffdacf833473520     |
+| revision_number         | 1                                    |
+| routes                  |                                      |
+| status                  | ACTIVE                               |
+| tags                    |                                      |
+| updated_at              | 2021-04-03T16:19:55Z                 |
++-------------------------+--------------------------------------+
++---------------------------+--------------------------------------+
+| Field                     | Value                                |
++---------------------------+--------------------------------------+
+| admin_state_up            | UP                                   |
+| availability_zone_hints   |                                      |
+| availability_zones        |                                      |
+| created_at                | 2021-04-03T16:19:57Z                 |
+| description               |                                      |
+| dns_domain                | None                                 |
+| id                        | 85d8cbe7-5a62-47a5-b73e-3d969a04fd13 |
+| ipv4_address_scope        | None                                 |
+| ipv6_address_scope        | None                                 |
+| is_default                | False                                |
+| is_vlan_transparent       | None                                 |
+| mtu                       | 1450                                 |
+| name                      | demo-net                             |
+| port_security_enabled     | True                                 |
+| project_id                | 2763d47c0d9f46f4bffdacf833473520     |
+| provider:network_type     | vxlan                                |
+| provider:physical_network | None                                 |
+| provider:segmentation_id  | 1                                    |
+| qos_policy_id             | None                                 |
+| revision_number           | 1                                    |
+| router:external           | Internal                             |
+| segments                  | None                                 |
+| shared                    | False                                |
+| status                    | ACTIVE                               |
+| subnets                   |                                      |
+| tags                      |                                      |
+| updated_at                | 2021-04-03T16:19:58Z                 |
++---------------------------+--------------------------------------+
++----------------------+--------------------------------------+
+| Field                | Value                                |
++----------------------+--------------------------------------+
+| allocation_pools     | 10.0.0.2-10.0.0.254                  |
+| cidr                 | 10.0.0.0/24                          |
+| created_at           | 2021-04-03T16:20:01Z                 |
+| description          |                                      |
+| dns_nameservers      | 8.8.8.8                              |
+| dns_publish_fixed_ip | None                                 |
+| enable_dhcp          | True                                 |
+| gateway_ip           | 10.0.0.1                             |
+| host_routes          |                                      |
+| id                   | 40c7d91f-4c6f-4806-a4ea-6089042d9bda |
+| ip_version           | 4                                    |
+| ipv6_address_mode    | None                                 |
+| ipv6_ra_mode         | None                                 |
+| name                 | demo-subnet                          |
+| network_id           | 85d8cbe7-5a62-47a5-b73e-3d969a04fd13 |
+| prefix_length        | None                                 |
+| project_id           | 2763d47c0d9f46f4bffdacf833473520     |
+| revision_number      | 0                                    |
+| segment_id           | None                                 |
+| service_types        |                                      |
+| subnetpool_id        | None                                 |
+| tags                 |                                      |
+| updated_at           | 2021-04-03T16:20:01Z                 |
++----------------------+--------------------------------------+
++---------------------------+--------------------------------------+
+| Field                     | Value                                |
++---------------------------+--------------------------------------+
+| admin_state_up            | UP                                   |
+| availability_zone_hints   |                                      |
+| availability_zones        |                                      |
+| created_at                | 2021-04-03T16:20:25Z                 |
+| description               |                                      |
+| dns_domain                | None                                 |
+| id                        | eec8ebaf-3acf-46ae-bb86-9ea1df8db307 |
+| ipv4_address_scope        | None                                 |
+| ipv6_address_scope        | None                                 |
+| is_default                | False                                |
+| is_vlan_transparent       | None                                 |
+| mtu                       | 1500                                 |
+| name                      | public1                              |
+| port_security_enabled     | True                                 |
+| project_id                | 2763d47c0d9f46f4bffdacf833473520     |
+| provider:network_type     | flat                                 |
+| provider:physical_network | physnet1                             |
+| provider:segmentation_id  | None                                 |
+| qos_policy_id             | None                                 |
+| revision_number           | 1                                    |
+| router:external           | External                             |
+| segments                  | None                                 |
+| shared                    | False                                |
+| status                    | ACTIVE                               |
+| subnets                   |                                      |
+| tags                      |                                      |
+| updated_at                | 2021-04-03T16:20:26Z                 |
++---------------------------+--------------------------------------+
++----------------------+--------------------------------------+
+| Field                | Value                                |
++----------------------+--------------------------------------+
+| allocation_pools     | 10.0.2.150-10.0.2.199                |
+| cidr                 | 10.0.2.0/24                          |
+| created_at           | 2021-04-03T16:20:35Z                 |
+| description          |                                      |
+| dns_nameservers      |                                      |
+| dns_publish_fixed_ip | None                                 |
+| enable_dhcp          | False                                |
+| gateway_ip           | 10.0.2.1                             |
+| host_routes          |                                      |
+| id                   | 107717bb-a468-4a94-b748-aefa45939e22 |
+| ip_version           | 4                                    |
+| ipv6_address_mode    | None                                 |
+| ipv6_ra_mode         | None                                 |
+| name                 | public1-subnet                       |
+| network_id           | eec8ebaf-3acf-46ae-bb86-9ea1df8db307 |
+| prefix_length        | None                                 |
+| project_id           | 2763d47c0d9f46f4bffdacf833473520     |
+| revision_number      | 0                                    |
+| segment_id           | None                                 |
+| service_types        |                                      |
+| subnetpool_id        | None                                 |
+| tags                 |                                      |
+| updated_at           | 2021-04-03T16:20:35Z                 |
++----------------------+--------------------------------------+
++-------------------------+--------------------------------------+
+| Field                   | Value                                |
++-------------------------+--------------------------------------+
+| created_at              | 2021-04-03T16:21:29Z                 |
+| description             |                                      |
+| direction               | ingress                              |
+| ether_type              | IPv4                                 |
+| id                      | cc09953b-e888-4247-a076-ea628e16c4be |
+| name                    | None                                 |
+| port_range_max          | None                                 |
+| port_range_min          | None                                 |
+| project_id              | 2763d47c0d9f46f4bffdacf833473520     |
+| protocol                | icmp                                 |
+| remote_address_group_id | None                                 |
+| remote_group_id         | None                                 |
+| remote_ip_prefix        | 0.0.0.0/0                            |
+| revision_number         | 0                                    |
+| security_group_id       | 61c6943c-b2d1-4f4e-bb91-fd8ff708c0e3 |
+| tags                    | []                                   |
+| updated_at              | 2021-04-03T16:21:29Z                 |
++-------------------------+--------------------------------------+
++-------------------------+--------------------------------------+
+| Field                   | Value                                |
++-------------------------+--------------------------------------+
+| created_at              | 2021-04-03T16:21:35Z                 |
+| description             |                                      |
+| direction               | ingress                              |
+| ether_type              | IPv4                                 |
+| id                      | dab99a86-6bae-4e88-9db0-0a910c7e1c1f |
+| name                    | None                                 |
+| port_range_max          | 22                                   |
+| port_range_min          | 22                                   |
+| project_id              | 2763d47c0d9f46f4bffdacf833473520     |
+| protocol                | tcp                                  |
+| remote_address_group_id | None                                 |
+| remote_group_id         | None                                 |
+| remote_ip_prefix        | 0.0.0.0/0                            |
+| revision_number         | 0                                    |
+| security_group_id       | 61c6943c-b2d1-4f4e-bb91-fd8ff708c0e3 |
+| tags                    | []                                   |
+| updated_at              | 2021-04-03T16:21:35Z                 |
++-------------------------+--------------------------------------+
++-------------------------+--------------------------------------+
+| Field                   | Value                                |
++-------------------------+--------------------------------------+
+| created_at              | 2021-04-03T16:21:40Z                 |
+| description             |                                      |
+| direction               | ingress                              |
+| ether_type              | IPv4                                 |
+| id                      | 99babd46-7958-422d-b8fe-331f498af7e7 |
+| name                    | None                                 |
+| port_range_max          | 8000                                 |
+| port_range_min          | 8000                                 |
+| project_id              | 2763d47c0d9f46f4bffdacf833473520     |
+| protocol                | tcp                                  |
+| remote_address_group_id | None                                 |
+| remote_group_id         | None                                 |
+| remote_ip_prefix        | 0.0.0.0/0                            |
+| revision_number         | 0                                    |
+| security_group_id       | 61c6943c-b2d1-4f4e-bb91-fd8ff708c0e3 |
+| tags                    | []                                   |
+| updated_at              | 2021-04-03T16:21:40Z                 |
++-------------------------+--------------------------------------+
++-------------------------+--------------------------------------+
+| Field                   | Value                                |
++-------------------------+--------------------------------------+
+| created_at              | 2021-04-03T16:21:46Z                 |
+| description             |                                      |
+| direction               | ingress                              |
+| ether_type              | IPv4                                 |
+| id                      | f208b5de-69d5-4838-9d94-10c4403a9b92 |
+| name                    | None                                 |
+| port_range_max          | 8080                                 |
+| port_range_min          | 8080                                 |
+| project_id              | 2763d47c0d9f46f4bffdacf833473520     |
+| protocol                | tcp                                  |
+| remote_address_group_id | None                                 |
+| remote_group_id         | None                                 |
+| remote_ip_prefix        | 0.0.0.0/0                            |
+| revision_number         | 0                                    |
+| security_group_id       | 61c6943c-b2d1-4f4e-bb91-fd8ff708c0e3 |
+| tags                    | []                                   |
+| updated_at              | 2021-04-03T16:21:46Z                 |
++-------------------------+--------------------------------------+
+Configuring nova public key and quotas.
++-------------+-------------------------------------------------+
+| Field       | Value                                           |
++-------------+-------------------------------------------------+
+| created_at  | None                                            |
+| fingerprint | 1a:03:4d:43:7f:70:28:fd:e6:60:bd:34:9f:2f:36:92 |
+| id          | mykey                                           |
+| is_deleted  | None                                            |
+| name        | mykey                                           |
+| type        | ssh                                             |
+| user_id     | 26a80ea924954ff29ed3ff6df30d224d                |
++-------------+-------------------------------------------------+
++----------------------------+---------+
+| Field                      | Value   |
++----------------------------+---------+
+| OS-FLV-DISABLED:disabled   | False   |
+| OS-FLV-EXT-DATA:ephemeral  | 0       |
+| description                | None    |
+| disk                       | 1       |
+| id                         | 1       |
+| name                       | m1.tiny |
+| os-flavor-access:is_public | True    |
+| properties                 |         |
+| ram                        | 512     |
+| rxtx_factor                | 1.0     |
+| swap                       |         |
+| vcpus                      | 1       |
++----------------------------+---------+
++----------------------------+----------+
+| Field                      | Value    |
++----------------------------+----------+
+| OS-FLV-DISABLED:disabled   | False    |
+| OS-FLV-EXT-DATA:ephemeral  | 0        |
+| description                | None     |
+| disk                       | 20       |
+| id                         | 2        |
+| name                       | m1.small |
+| os-flavor-access:is_public | True     |
+| properties                 |          |
+| ram                        | 2048     |
+| rxtx_factor                | 1.0      |
+| swap                       |          |
+| vcpus                      | 1        |
++----------------------------+----------+
++----------------------------+-----------+
+| Field                      | Value     |
++----------------------------+-----------+
+| OS-FLV-DISABLED:disabled   | False     |
+| OS-FLV-EXT-DATA:ephemeral  | 0         |
+| description                | None      |
+| disk                       | 40        |
+| id                         | 3         |
+| name                       | m1.medium |
+| os-flavor-access:is_public | True      |
+| properties                 |           |
+| ram                        | 4096      |
+| rxtx_factor                | 1.0       |
+| swap                       |           |
+| vcpus                      | 2         |
++----------------------------+-----------+
++----------------------------+----------+
+| Field                      | Value    |
++----------------------------+----------+
+| OS-FLV-DISABLED:disabled   | False    |
+| OS-FLV-EXT-DATA:ephemeral  | 0        |
+| description                | None     |
+| disk                       | 80       |
+| id                         | 4        |
+| name                       | m1.large |
+| os-flavor-access:is_public | True     |
+| properties                 |          |
+| ram                        | 8192     |
+| rxtx_factor                | 1.0      |
+| swap                       |          |
+| vcpus                      | 4        |
++----------------------------+----------+
++----------------------------+-----------+
+| Field                      | Value     |
++----------------------------+-----------+
+| OS-FLV-DISABLED:disabled   | False     |
+| OS-FLV-EXT-DATA:ephemeral  | 0         |
+| description                | None      |
+| disk                       | 160       |
+| id                         | 5         |
+| name                       | m1.xlarge |
+| os-flavor-access:is_public | True      |
+| properties                 |           |
+| ram                        | 16384     |
+| rxtx_factor                | 1.0       |
+| swap                       |           |
+| vcpus                      | 8         |
++----------------------------+-----------+
+
+Done.
+
+To deploy a demo instance, run:
+
+openstack server create \
+    --image cirros \
+    --flavor m1.tiny \
+    --key-name mykey \
+    --network demo-net \
+    demo1

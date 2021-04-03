@@ -2,6 +2,8 @@
 
 Práce staví na záznamu https://campuscvut.sharepoint.com/sites/Predmet-B202-NI-VCC-C102/Sdilene%20dokumenty/Forms/AllItems.aspx?id=%2Fsites%2FPredmet%2DB202%2DNI%2DVCC%2DC102%2FSdilene%20dokumenty%2FGeneral%2FRecordings%2FSch%C5%AFzka%20v%20kan%C3%A1lu%20%E2%80%9EGeneral%E2%80%9C%2D20210318%5F143526%2DZ%C3%A1znam%20sch%C5%AFzky%2Emp4&parent=%2Fsites%2FPredmet%2DB202%2DNI%2DVCC%2DC102%2FSdilene%20dokumenty%2FGeneral%2FRecordings&p=true&originalPath=aHR0cHM6Ly9jYW1wdXNjdnV0LnNoYXJlcG9pbnQuY29tLzp2Oi9zL1ByZWRtZXQtQjIwMi1OSS1WQ0MtQzEwMi9FZjkyMW1Vb1FEQkpoOGViUDdfMHZHd0JpMHg2dWZ0SDRZYWpRS2FGVmZjc1Z3P3J0aW1lPUVXTGZ5VFQwMkVn[3. cvičení], které vychází z https://docs.openstack.org/kolla-ansible/victoria/user/quickstart.html[Quick Startu pro OpenStacku].
 
+Dokumentující textové logy screenshoty jsou přiloženy v adresářích `images/` a `logs/`.
+
 == Teorie
 
 === Kolla
@@ -305,6 +307,8 @@ Následně potřebujeme na všech nodech restartovat příslušné síťové roz
 ----
 ifdown ens3 && ifup ens3
 ----
+
+Virtuální rozhraní můžeme zkontrolovat příkazem `ip link`.
 
 == Aktualizace balíčků
 
@@ -854,34 +858,130 @@ root@pondepe1-cv3-cmp-2:~# cat /proc/cpuinfo | grep vmx
 flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon rep_good nopl xtopology cpuid tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch invpcid_single pti ssbd ibrs ibpb tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm mpx avx512f avx512dq rdseed adx smap clflushopt clwb avx512cd avx512bw avx512vl xsaveopt xsavec xgetbv1 arat pku ospke md_clear
 ----
 
+Následující příkazy spouštíme na `ctl` nodu v adresáři, kde se nachází náš modifikovaný soubor `multinode` (tedy adresář `/root`).
+
 Kvůli nastavení Pythonu (nejspíš souvisí s virualenv) je nutné při deploymentu přepsat defaultní hodnotu `ansible_python_interpreter`.
 
-Boostrap serverů s kolla deploy závislostmi.
+Provedeme boostrap serverů s kolla deploy závislostmi. +
+Terminal log je k dispozici v souboru `logs/terminal-logs/kolla-ansible-bootstrap-servers.txt`.
 
 [source, bash]
 ----
-kolla-ansible -i ./multinode bootstrap-servers -e ansible_python_interpreter=/usr/bin/python
+kolla-ansible -i ./multinode bootstrap-servers -e ansible_python_interpreter=/usr/bin/python3
 ----
 
-Následující případné chyba lze vyřešit (re)instalací `python-pkg-resources`.
-
-----
-An exception occurred during task execution. To see the full traceback, use -vvv. The error was: ImportError: No module named pkg_resources
-fatal: [10.38.6.0]: FAILED! => {"changed": false, "msg": "Failed to import the required Python library (setuptools) on pondepe1-cv3-ctl's Python /usr/bin/python. Please read module documentation and install in the appropriate location. If the required library is installe
-d, but Ansible is using the wrong Python interpreter, please consult the documentation on ansible_python_interpreter"}
-An exception occurred during task execution. To see the full traceback, use -vvv. The error was: ImportError: No module named pkg_resources
-fatal: [10.38.6.22]: FAILED! => {"changed": false, "msg": "Failed to import the required Python library (setuptools) on pondepe1-cv3-cmp-1's Python /usr/bin/python. Please read module documentation and install in the appropriate location. If the required library is insta
-lled, but Ansible is using the wrong Python interpreter, please consult the documentation on ansible_python_interpreter"}
-An exception occurred during task execution. To see the full traceback, use -vvv. The error was: ImportError: No module named pkg_resources
-fatal: [10.38.6.93]: FAILED! => {"changed": false, "msg": "Failed to import the required Python library (setuptools) on pondepe1-cv3-cmp-2's Python /usr/bin/python. Please read module documentation and install in the appropriate location. If the required library is insta
-lled, but Ansible is using the wrong Python interpreter, please consult the documentation on ansible_python_interpreter"}
-----
-
-Řešení:
+Následně spustíme pre-deployment checks. +
+Terminal log je k dispozici v souboru `logs/terminal-logs/kolla-ansible-prechecks.txt`.
 
 [source, bash]
 ----
-apt-get install --reinstall python-pkg-resources
-reboot
+kolla-ansible -i ./multinode prechecks -e ansible_python_interpreter=/usr/bin/python3
 ----
 
+Nakonec provedeme nasazení. +
+Zkrácený terminal log je k dispozici v souboru `kolla-ansible-deploy.txt`.
+
+[source, bash]
+----
+kolla-ansible -i ./multinode deploy -e ansible_python_interpreter=/usr/bin/python3
+----
+
+Dokumentující screenshoty jsou k dispozici v adresáři `images/terminal-logs`.
+
+== Použití OpenStacku
+
+Na `ctl` node nainstalujeme OpenStack CLI klienta.
+
+[source, bash]
+----
+pip3 install python-openstackclient
+----
+
+Vygenerujeme openrc soubor s přihlašovacími údaji pro administrátora.
+
+[source, bash]
+----
+kolla-ansible post-deploy
+. /etc/kolla/admin-openrc.sh
+----
+
+Získáme přihlašovací údaje.
+
+[source]
+----
+root@pondepe1-cv3-ctl:~# set | grep OS_
+OS_AUTH_PLUGIN=password
+OS_AUTH_URL=http://10.38.6.0:35357/v3
+OS_ENDPOINT_TYPE=internalURL
+OS_IDENTITY_API_VERSION=3
+OS_INTERFACE=internal
+OS_PASSWORD=LagTixSJdjJMBlWTCEG3LlEy2nuOpjb44zjGuf4T #<1>
+OS_PROJECT_DOMAIN_NAME=Default
+OS_PROJECT_NAME=admin
+OS_REGION_NAME=RegionOne
+OS_TENANT_NAME=admin
+OS_USERNAME=admin #<2>
+OS_USER_DOMAIN_NAME=Default
+----
+
+<1> Login do služby Horizon.
+<2> Heslo do služby Horizon.
+
+Vytvoříme ukázkovou síť.
+
+[source, bash]
+----
+/usr/local/share/kolla-ansible/init-runonce
+----
+
+Terminal log je k dispozici v souboru `logs/terminal-logs/example-networks.txt`
+
+Vytvoříme dvě instance VM na OpenStacku pod názvy `demo1` a `demo2`, které se budou nacházet ve společné síti `demo-net`.
+
+[source, bash]
+----
+openstack server create \
+    --image cirros \
+    --flavor m1.tiny \
+    --key-name mykey \
+    --network demo-net \
+    demo1
+
+openstack server create \
+    --image cirros \
+    --flavor m1.tiny \
+    --key-name mykey \
+    --network demo-net \
+    demo2
+----
+
+VM se jménem `demo1` obdržela IP adresu `10.0.0.203` a VM se jménem `demo2` IP adresu `10.0.0.192`.
+
+V kompletním logu jednotlivých VM můžeme nahlednout, že VM dané IP adresy obdržely od DHCP serveru. +
+Logy jsou přiloženy v adresáři `logs/open-stack-vm-logs`.
+
+----
+DEMO1
+
+Starting network: udhcpc: started, v1.29.3
+udhcpc: sending discover
+udhcpc: sending select for 10.0.0.203
+udhcpc: lease of 10.0.0.203 obtained, lease time 86400 #<1>
+----
+
+<1> VM demo1 obdržela IP adresu od DHCP
+
+----
+DEMO2
+
+Starting network: udhcpc: started, v1.29.3
+udhcpc: sending discover
+udhcpc: sending select for 10.0.0.192
+udhcpc: lease of 10.0.0.192 obtained, lease time 86400 #<1>
+----
+
+<1> VM demo2 obdržela IP adresu od DHCP
+
+Díky tomu, že jsou VM umístěny ve stejné síti, měly by být vzájemně dosažitelné a měl by mezi nimi fungovat ping. +
+Na jednotlivých VM běží CirrOS, který umožňuje vzájemný ping otestovat. +
+Screenshoty umístěné v adresáři `images/cirros-vm-ping` tedy zachycují ping z `demo1` na adresu `10.0.0.192` a z `demo2` na adresu `10.0.0.203`
