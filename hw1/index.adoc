@@ -173,7 +173,6 @@ Last login: Tue Apr 28 23:16:29 2020
 root@pondepe1-cv3-cmp-1:~#
 ----
 
-[source]
 ----
 wiedzmin@wiedzmin-HP-ProBook-450-G7:~$ ssh root@10.38.6.93
 The authenticity of host '10.38.6.93 (10.38.6.93)' can't be established.
@@ -912,7 +911,6 @@ kolla-ansible post-deploy
 
 Získáme přihlašovací údaje do služby Horizon.
 
-[source]
 ----
 root@pondepe1-cv3-ctl:~# set | grep OS_
 OS_AUTH_PLUGIN=password
