@@ -2,7 +2,7 @@
 
 Práce staví na záznamu https://campuscvut.sharepoint.com/sites/Predmet-B202-NI-VCC-C102/Sdilene%20dokumenty/Forms/AllItems.aspx?id=%2Fsites%2FPredmet%2DB202%2DNI%2DVCC%2DC102%2FSdilene%20dokumenty%2FGeneral%2FRecordings%2FSch%C5%AFzka%20v%20kan%C3%A1lu%20%E2%80%9EGeneral%E2%80%9C%2D20210318%5F143526%2DZ%C3%A1znam%20sch%C5%AFzky%2Emp4&parent=%2Fsites%2FPredmet%2DB202%2DNI%2DVCC%2DC102%2FSdilene%20dokumenty%2FGeneral%2FRecordings&p=true&originalPath=aHR0cHM6Ly9jYW1wdXNjdnV0LnNoYXJlcG9pbnQuY29tLzp2Oi9zL1ByZWRtZXQtQjIwMi1OSS1WQ0MtQzEwMi9FZjkyMW1Vb1FEQkpoOGViUDdfMHZHd0JpMHg2dWZ0SDRZYWpRS2FGVmZjc1Z3P3J0aW1lPUVXTGZ5VFQwMkVn[3. cvičení], které vychází z https://docs.openstack.org/kolla-ansible/victoria/user/quickstart.html[Quick Startu pro OpenStacku].
 
-Dokumentující textové logy screenshoty jsou přiloženy v adresářích `images/` a `logs/`.
+Dokumentující textové logy a screenshoty jsou přiloženy v adresářích `images/` a `logs/`.
 
 == Teorie
 
@@ -16,7 +16,7 @@ Má následující subprojekty.
 
 Produkuje recepty v ansible, které dokáží OpenStack automaticky nasadit a nakonfigurovat.
 
-Je opinionated - má názor na to, jak by věci měly defaultně být (lze změnit)
+Je opinionated - má názor na to, jak by věci měly defaultně být (lze změnit).
 
 ==== Kayobe
 
@@ -77,7 +77,7 @@ image::./images/vms.png[,800,]
 
 == Připojení na VM pomocí SSH
 
-Na vytvořené VM se můžeme přihlásit pomocí SSH pod uživatelem root. + 
+Na vytvořené VM se můžeme přihlásit pomocí SSH pod uživatelem `root`. + 
 Není potřeba zadávat heslo díky nastavení SSH klíče na Cloud FIT.
 
 === Připojení na CTL node
@@ -89,7 +89,7 @@ ssh root@10.38.6.0
 
 **Log z terminálu**
 
-[source, bash]
+[source]
 ----
 wiedzmin@wiedzmin-HP-ProBook-450-G7:~$ ssh root@10.38.6.0
 The authenticity of host '10.38.6.0 (10.38.6.0)' can't be established.
@@ -137,7 +137,7 @@ ssh root@10.38.6.93
 
 **Log z terminálu**
 
-[source, bash]
+[source]
 ----
 wiedzmin@wiedzmin-HP-ProBook-450-G7:~$ ssh root@10.38.6.22
 The authenticity of host '10.38.6.22 (10.38.6.22)' can't be established.
@@ -175,7 +175,7 @@ Last login: Tue Apr 28 23:16:29 2020
 root@pondepe1-cv3-cmp-1:~#
 ----
 
-[source, bash]
+[source]
 ----
 wiedzmin@wiedzmin-HP-ProBook-450-G7:~$ ssh root@10.38.6.93
 The authenticity of host '10.38.6.93 (10.38.6.93)' can't be established.
@@ -215,9 +215,9 @@ root@pondepe1-cv3-cmp-2:~#
 
 == Nastavení přístupu z ctl node na cmp nodes bez hesla
 
-Z nodu **ctl** potřebujeme přistupovat na nody **cmp-1** a **cmp-2** bez hesla (za využití **SSH klíče**).
+Z nodu `ctl` potřebujeme přistupovat na nody `cmp-1` a `cmp-2` bez hesla (za využití **SSH klíče**).
 
-Na uzlu **ctl** vygenerujeme pomocí ssh-keygen SSH klíč (public + private):
+Na nodu `ctl` vygenerujeme pomocí `ssh-keygen` public a private SSH klíče.
 
 [source, bash]
 ----
@@ -226,7 +226,7 @@ ssh-keygen
 
 **Log z terminálu**
 
-[source, bash]
+[source]
 ----
 root@pondepe1-cv3-ctl:~# ssh-keygen
 Generating public/private rsa key pair.
@@ -252,9 +252,9 @@ The key's randomart image is:
 root@pondepe1-cv3-ctl:~#
 ----
 
-Vygenerovaný public key potřebujeme přenést z řídícího ulzu do authorized_keys na výpočetních uzlech.
+Vygenerovaný public key potřebujeme přenést z `ctl` nodu do souboru `/root/.ssh/authorized_keys` na `cmp` nodech.
 
-Ze souboru `/root/.ssh/id_rsa.pub` na ctl node tedy zkopírujeme public key a na uzlech cmp-1 a cmp-2 ho přidáme do souboru `/root/.ssh/authorized_keys`.
+Ze souboru `/root/.ssh/id_rsa.pub` na `ctl` node tedy zkopírujeme public key a na uzlech `cmp-1` a `cmp-2` ho přidáme do souboru `/root/.ssh/authorized_keys`.
 
 [source, bash]
 ----
@@ -262,7 +262,7 @@ cat .ssh/id_rsa.pub >> .ssh/authorized_keys #<1>
 # Zkopírovat obsah a např. s využitím editoru vim vložit na cmp-1 a cmp-2
 ----
 
-<1> Nastavíme rovnou přístup ctl nodu sám na sebe bez hesla
+<1> Nastavíme také přístup `ctl` nodu sám na sebe bez hesla (využití v případě, kdy by sám sloužil jako výpočetní node)
 
 == Nastavení virtuálních síťových rozhraní
 
@@ -312,7 +312,7 @@ Virtuální rozhraní můžeme zkontrolovat příkazem `ip link`.
 
 == Aktualizace balíčků
 
-Na všech nodech je potřeba aktualizovat balíčky:
+Na všech nodech je potřeba aktualizovat balíčky.
 
 [source, bash]
 ----
@@ -323,16 +323,16 @@ apt update && apt upgrade
 
 Nejprve je nutné nainstalovat potřebné závislosti.
 
-Na všech nodech:
+Na všech nodech nainstalujeme potřebné pythonovské knihovny.
 
 [source, bash]
 ----
 apt-get install python3-dev libffi-dev gcc libssl-dev
 apt-get install python3-pip
-sudo pip3 install -U pip
+pip3 install -U pip
 ----
 
-Dále nainstalujeme Ansible a Kolla-ansible pouze na ctl node.
+Dále **pouze na `ctl` node** nainstalujeme Ansible a Kolla-ansible.
 
 [source, bash]
 ----
@@ -365,7 +365,7 @@ cp /usr/local/share/kolla-ansible/ansible/inventory/* .
 == Konfigurace Ansible
 
 Upravíme konfiguraci Ansible. +
-V souboru `/etc/ansible/ansible.cfg` nastavíme do sekce `[defaults]` hodnoty:
+V souboru `/etc/ansible/ansible.cfg` nastavíme do sekce `[defaults]` následující hodnoty.
 
 [source, cfg]
 ----
@@ -377,13 +377,13 @@ forks=100
 
 Zřejmě se jedná o konfiguraci optimalizující rychlost nasazení.
 
-`host_key_checking=False` vypne dialog pro kontrolu klíče při prvotním připojení přes SSH. +
-`pipelining=True` znamená, že služba před jedno SSH pouští sadu příkazů - nepřipojuje se opakovaně. +
-`forks=100` povoleno až 100 operací zároveň.
+`host_key_checking=False`... vypne dialog pro kontrolu klíče při prvotním připojení přes SSH +
+`pipelining=True` ... služba pouští sadu příkazů přes jedno SSH spojení - nepřipojuje se opakovaně +
+`forks=100`... povoleno až 100 operací zároveň
 
 == Konfigurace Ansible inventory file
 
-Inventory file je soubor, který specifikuje, které uzly má Kolla-ansible řídit a v jakých jsou třídách. +
+Inventory file je soubor, který specifikuje, které nody má Kolla-ansible řídit a v jakých jsou třídách. +
 Můžeme v něm definovat role nodů a přístupové údaje.
 
 Kolla-ansible disponuje dvěma invertory files:
@@ -434,7 +434,7 @@ root@pondepe1-cv3-ctl:~# ip add
        valid_lft forever preferred_lft forever
 ----
 
-<1> Hledaná IP adresa je `10.38.6.0`.
+<1> Hledaná IP adresa je `10.38.6.0`
 
 V sekci `[control]` nastavíme IP adresu `ctl` nodu.
 
@@ -447,7 +447,7 @@ V sekci `[control]` nastavíme IP adresu `ctl` nodu.
 
 Dále nastavíme `cmp` nody.
 
-Jejich IP adresy získáme na příslušných uzlech příkazem `ip add`.
+Jejich IP adresy získáme na příslušných VM příkazem `ip add`.
 
 **Log z terminálu**
 
@@ -501,6 +501,15 @@ root@pondepe1-cv3-cmp-2:~# ip add
 <1> IP adresa nodu `cmp-1` je `10.38.6.22`
 <2> IP adresa nodu `cmp-2` je `10.38.6.93`
 
+V sekci `[compute]` pak nastavíme IP zjištěné IP adresy nodů.
+
+[source, cfg]
+----
+[compute]
+10.38.6.22 
+10.38.6.93
+----
+
 Node `ctl` nastavíme v inventory file jako network node. +
 Sekci `[network]` tedy nastavíme následovně:
 
@@ -521,7 +530,7 @@ Sekci `[monitoring]` tedy nastavíme následovně:
 control
 ----
 
-Storage nastavíme na `cmp` nody.
+Storage nastavíme na `cmp` nody. +
 Sekci `[storage]` tedy nastavíme následovně:
 
 [source, cfg]
@@ -544,8 +553,8 @@ control
 Dále neutron se nainstaluje na nody ve třídě `[network]`:
 
 ----
-[network:children]
-control
+[neutron:children]
+network
 ----
 
 Všechny provedené změny v souboru `multinode`:
@@ -743,7 +752,7 @@ Zafixujeme release OpenStacku, aby případně nedošlo k upgradu při vydání 
 openstack_release: "victoria"
 ----
 
-Nastavíme interní VIP adresu na IP adresu `ctl` uzlu.
+Nastavíme interní VIP adresu na IP adresu `ctl` nodu.
 
 ----
 kolla_internal_vip_address: "10.38.6.0"
@@ -763,11 +772,11 @@ neutron_external_interface: "veth0"
 
 V sekci `OpenStack options` vypneme HAProxy.
 
-NOTE: V sekci OpenStack options se specifikuje, co bude Kolla instalovat.
-
 ----
 enable_haproxy: "no"
 ----
+
+NOTE: V sekci OpenStack options se specifikuje, co bude Kolla instalovat.
 
 Celkově jsme tedy v souboru `/etc/kolla/globals.yml` provedli následující změny.
 
@@ -905,7 +914,7 @@ kolla-ansible post-deploy
 . /etc/kolla/admin-openrc.sh
 ----
 
-Získáme přihlašovací údaje.
+Získáme přihlašovací údaje do služby Horizon.
 
 [source]
 ----
@@ -957,7 +966,7 @@ openstack server create \
 
 VM se jménem `demo1` obdržela IP adresu `10.0.0.203` a VM se jménem `demo2` IP adresu `10.0.0.192`.
 
-V kompletním logu jednotlivých VM můžeme nahlednout, že VM dané IP adresy obdržely od DHCP serveru. +
+V kompletním logu (v Horizon) jednotlivých VM můžeme nahlednout, že VM dané IP adresy obdržely od DHCP serveru. +
 Logy jsou přiloženy v adresáři `logs/open-stack-vm-logs`.
 
 ----
