@@ -741,4 +741,193 @@ image::./images/traffic/wireshark_response_detail.png[,900,]
 
 == Diagram síťových prvků, přes které prochází east-west provoz
 
-TODO
+=== Rozhraní na instancích
+
+Název rozhraní na instaních `demo1` a `demo2` zjistíme příkazem `ip addr`.
+
+image::./images/interfaces/demo1.png[,800,0]
+
+image::./images/interfaces/demo2.png[,800,0]
+
+=== Informace o Linux Bridge na nodech (qbr)
+
+Vypíšeme si ethernetové bridge pomoc í příkazu níže.
+
+[source, bash]
+----
+brctl show
+----
+
+**Výstup na cmp-1**
+----
+root@pondepe1-cv3-cmp-1:~# brctl show
+bridge name     bridge id               STP enabled     interfaces
+docker0         8000.0242afd10c74       no
+qbr7186b30e-cb          8000.4edb852d263a       no              qvb7186b30e-cb #<1>
+                                                        tap7186b30e-cb #<2>
+----
+<1> Linux Bridge tap port: `qvb7186b30e-cb`
+<2> Linux Bridge qvb port: `tap7186b30e-cb`
+
+**Výstup na cmp-2**
+----
+root@pondepe1-cv3-cmp-2:~# brctl show
+bridge name     bridge id               STP enabled     interfaces
+docker0         8000.0242653f7b86       no
+qbrea12809b-b7          8000.b64be97f2c8a       no              qvbea12809b-b7 #<1>
+                                                        tapea12809b-b7 #<2>
+----
+<1> Linux Bridge tap port: `qvbea12809b-b7`
+<2> Linux Bridge qvb port: `tapea12809b-b7`
+
+Získáme názvy Linux Bridgů.
+
+**Výstup na cmp-1**
+----
+root@pondepe1-cv3-cmp-1:~# ip addr | grep 'qbr'
+11: qbr7186b30e-cb: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP group default qlen 1000 #<1>
+13: qvb7186b30e-cb@qvo7186b30e-cb: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue master qbr7186b30e-cb state UP group default qlen 1000
+14: tap7186b30e-cb: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc fq_codel master qbr7186b30e-cb state UNKNOWN group default qlen 1000
+----
+
+<1> Název bridge: `qbr7186b30e-cb`
+
+**Výstup na cmp-2**
+----
+9: qbrea12809b-b7: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP group default qlen 1000 #<1>
+11: qvbea12809b-b7@qvoea12809b-b7: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue master qbrea12809b-b7 state UP group default qlen 1000
+12: tapea12809b-b7: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc fq_codel master qbrea12809b-b7 state UNKNOWN group default qlen 1000
+----
+
+<1> Název bridge: `qbrea12809b-b7`
+
+=== Informace o OVS Integration Bridge na nodech (br-int)
+
+Přepneme se do OVS kontejneru a vypíšeme si informace o integration bridgi.
+
+[source, bash]
+----
+docker exec -it openvswitch_vswitchd bash -i
+ovs-ofctl show br-int
+----
+
+**Výstup na cmp-1**
+----
+(openvswitch-vswitchd)[root@pondepe1-cv3-cmp-1 /]# ovs-ofctl show br-int
+OFPT_FEATURES_REPLY (xid=0x2): dpid:00007aa7d11e3d4b
+n_tables:254, n_buffers:0
+capabilities: FLOW_STATS TABLE_STATS PORT_STATS QUEUE_STATS ARP_MATCH_IP
+actions: output enqueue set_vlan_vid set_vlan_pcp strip_vlan mod_dl_src mod_dl_dst mod_nw_src mod_nw_dst mod_nw_tos mod_tp_src mod_tp_dst
+ 1(patch-tun): addr:32:4a:4a:8c:34:7e #<1>
+     config:     0
+     state:      0
+     speed: 0 Mbps now, 0 Mbps max
+ 3(qvo7186b30e-cb): addr:56:1b:9d:0a:10:99 #<2>
+     config:     0
+     state:      0
+     current:    10GB-FD COPPER
+     speed: 10000 Mbps now, 0 Mbps max
+ LOCAL(br-int): addr:7a:a7:d1:1e:3d:4b #<3>
+     config:     PORT_DOWN
+     state:      LINK_DOWN
+     speed: 0 Mbps now, 0 Mbps max
+OFPT_GET_CONFIG_REPLY (xid=0x4): frags=normal miss_send_len=0
+----
+<1> MAC adresa patch-run: `32:4a:4a:8c:34:7e`
+<2> qvo port: `qvo7186b30e-cb`
+<3> MAC adresa bridge: `7a:a7:d1:1e:3d:4b`
+
+**Výstup na cmp-2**
+----
+(openvswitch-vswitchd)[root@pondepe1-cv3-cmp-2 /]# ovs-ofctl show br-int
+OFPT_FEATURES_REPLY (xid=0x2): dpid:00001e16fcea8c43
+n_tables:254, n_buffers:0
+capabilities: FLOW_STATS TABLE_STATS PORT_STATS QUEUE_STATS ARP_MATCH_IP
+actions: output enqueue set_vlan_vid set_vlan_pcp strip_vlan mod_dl_src mod_dl_dst mod_nw_src mod_nw_dst mod_nw_tos mod_tp_src mod_tp_dst
+ 1(patch-tun): addr:a6:a8:6f:9b:fb:ac #<1>
+     config:     0
+     state:      0
+     speed: 0 Mbps now, 0 Mbps max
+ 2(qvoea12809b-b7): addr:da:ba:87:e7:e6:fe #<2>
+     config:     0
+     state:      0
+     current:    10GB-FD COPPER
+     speed: 10000 Mbps now, 0 Mbps max
+ LOCAL(br-int): addr:1e:16:fc:ea:8c:43 #<3>
+     config:     PORT_DOWN
+     state:      LINK_DOWN
+     speed: 0 Mbps now, 0 Mbps max
+OFPT_GET_CONFIG_REPLY (xid=0x4): frags=normal miss_send_len=0
+----
+<1> MAC adresa patch-run: `a6:a8:6f:9b:fb:ac`
+<2> qvo port: `qvoea12809b-b7`
+<3> MAC adresa bridge: `1e:16:fc:ea:8c:43`
+
+=== Informace o OVS Tunnel Bridge na nodech (br-tun)
+
+V rámci OVS kontejneru si vypíšeme informace o tunnel bridgi.
+
+[source, bash]
+----
+ovs-ofctl show br-tun
+----
+
+**Výstup na cmp-1**
+----
+(openvswitch-vswitchd)[root@pondepe1-cv3-cmp-1 /]# ovs-ofctl show br-tun
+OFPT_FEATURES_REPLY (xid=0x2): dpid:00006a9584b2da41
+n_tables:254, n_buffers:0
+capabilities: FLOW_STATS TABLE_STATS PORT_STATS QUEUE_STATS ARP_MATCH_IP
+actions: output enqueue set_vlan_vid set_vlan_pcp strip_vlan mod_dl_src mod_dl_dst mod_nw_src mod_nw_dst mod_nw_tos mod_tp_src mod_tp_dst
+ 1(patch-int): addr:da:06:30:40:4f:b3 #<1>
+     config:     0
+     state:      0
+     speed: 0 Mbps now, 0 Mbps max
+ 4(vxlan-0a260600): addr:12:01:5d:1f:2c:eb
+     config:     0
+     state:      0
+     speed: 0 Mbps now, 0 Mbps max
+ 5(vxlan-0a26065d): addr:9e:68:3f:27:ca:3c
+     config:     0
+     state:      0
+     speed: 0 Mbps now, 0 Mbps max
+ LOCAL(br-tun): addr:6a:95:84:b2:da:41 #<2>
+     config:     PORT_DOWN
+     state:      LINK_DOWN
+     speed: 0 Mbps now, 0 Mbps max
+OFPT_GET_CONFIG_REPLY (xid=0x4): frags=normal miss_send_len=0
+----
+<1> MAC adresa patch-int: `da:06:30:40:4f:b3`
+<2> MAC adresa bridge: `6a:95:84:b2:da:41`
+
+**Výstup na cmp-2**
+----
+(openvswitch-vswitchd)[root@pondepe1-cv3-cmp-2 /]# ovs-ofctl show br-tun
+OFPT_FEATURES_REPLY (xid=0x2): dpid:0000fa057b9f514e
+n_tables:254, n_buffers:0
+capabilities: FLOW_STATS TABLE_STATS PORT_STATS QUEUE_STATS ARP_MATCH_IP
+actions: output enqueue set_vlan_vid set_vlan_pcp strip_vlan mod_dl_src mod_dl_dst mod_nw_src mod_nw_dst mod_nw_tos mod_tp_src mod_tp_dst
+ 1(patch-int): addr:ba:7e:15:21:9a:62 #<1>
+     config:     0
+     state:      0
+     speed: 0 Mbps now, 0 Mbps max
+ 2(vxlan-0a260600): addr:72:b0:76:2b:2f:77
+     config:     0
+     state:      0
+     speed: 0 Mbps now, 0 Mbps max
+ 4(vxlan-0a260616): addr:9a:f1:bf:50:1e:7d
+     config:     0
+     state:      0
+     speed: 0 Mbps now, 0 Mbps max
+ LOCAL(br-tun): addr:fa:05:7b:9f:51:4e #<2>
+     config:     PORT_DOWN
+     state:      LINK_DOWN
+     speed: 0 Mbps now, 0 Mbps max
+OFPT_GET_CONFIG_REPLY (xid=0x4): frags=normal miss_send_len=0
+----
+<1> MAC adresa patch-int: `ba:7e:15:21:9a:62`
+<2> MAC adresa bridge: `fa:05:7b:9f:51:4e`
+
+=== Diagram
+
+link:./diagrams/east_west.pdf[East-West diagram]
