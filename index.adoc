@@ -1,3 +1,4 @@
 = NI-VCC
 
 * xref:hw1/index#[]
+* xref:hw2/index#[]
