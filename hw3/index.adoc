@@ -1,6 +1,6 @@
 = HW3: Docker a systemd
 
-== Sestavení obrazu s NodeJS http serveru metodou Dockerfile
+== Sestavení obrazu s NodeJS HTTP serveru metodou Dockerfile
 
 Na VM nainstalujeme NodeJS.
 
@@ -138,7 +138,7 @@ Transfer-Encoding: chunked
 
 Otestujeme ještě přístup skrze browser.
 
-image::./images/nodejs-http-test.png[,600,]
+image::./images/nodejs-http-test.png[,900,]
 
 == Analýza obrazu ve formátu OCI získaného z předchozího kroku pomocí "docker save"
 
@@ -472,3 +472,199 @@ alpine-linux-machine container systemd-nspawn alpine 3.13.5  -
 
 1 machines listed.
 ----
+
+== Jednotkový soubor pro systemd
+
+Jednotkový soubor je určený pro NodeJS HTTP server z první úlohy.
+
+Nejprve vytvoříme uživatele, pod kterým budeme službu spouštět, aby ji nebylo nutné spouštět pod uživatelem root.
+
+[source, bash]
+----
+adduser nodejs-http
+----
+
+----
+root@pondepe1-cv3-ctl:~/hw3# adduser nodejs-http
+Adding user `nodejs-http' ...
+Adding new group `nodejs-http' (1001) ...
+Adding new user `nodejs-http' (1001) with group `nodejs-http' ...
+Creating home directory `/home/nodejs-http' ...
+Copying files from `/etc/skel' ...
+New password:
+Retype new password:
+Sorry, passwords do not match.
+passwd: Authentication token manipulation error
+passwd: password unchanged
+Try again? [y/N] y
+New password:
+Retype new password:
+passwd: password updated successfully
+Changing the user information for nodejs-http
+Enter the new value, or press ENTER for the default
+        Full Name []:
+        Room Number []:
+        Work Phone []:
+        Home Phone []:
+        Other []:
+Is the information correct? [Y/n] y
+----
+
+Vytvoříme soubor `/lib/systemd/system/my-nodejs-http-server.service`, tedy unit file pro systemd určený službě `my-node-http-server`.
+
+Obsah souboru bude následující.
+
+----
+[Unit]
+Description=server.js
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/node /usr/local/share/nodejs-http-server.js
+User=nodejs-http
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+DevicePolicy=closed
+ProtectSystem=full
+ProtectHome=read-only
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+CapabilityBoundingSet=
+
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+----
+
+Aktualizujeme konfiguraci systemd managera a aktualizujeme unit files.
+
+[source, bash]
+----
+systemctl daemon-reload
+----
+
+Spustíme analýzu unit filu.
+
+[source, bash]
+----
+systemd-analyze security my-nodejs-http-server.service
+----
+
+----
+  NAME                                                        DESCRIPTION                                                       EXPOSURE
+✗ PrivateNetwork=                                             Service has access to the host's network                               0.5
+✓ User=/DynamicUser=                                          Service runs under a static non-root user identity
+✓ CapabilityBoundingSet=~CAP_SET(UID|GID|PCAP)                Service cannot change UID/GID identities/capabilities
+✓ CapabilityBoundingSet=~CAP_SYS_ADMIN                        Service has no administrator privileges
+✓ CapabilityBoundingSet=~CAP_SYS_PTRACE                       Service has no ptrace() debugging abilities
+✗ RestrictAddressFamilies=~AF_(INET|INET6)                    Service may allocate Internet sockets                                  0.3
+✓ RestrictNamespaces=~CLONE_NEWUSER                           Service cannot create user namespaces
+✓ RestrictAddressFamilies=~…                                  Service cannot allocate exotic sockets
+✓ CapabilityBoundingSet=~CAP_(CHOWN|FSETID|SETFCAP)           Service cannot change file ownership/access mode/capabilities
+✓ CapabilityBoundingSet=~CAP_(DAC_*|FOWNER|IPC_OWNER)         Service cannot override UNIX file/IPC permission checks
+✓ CapabilityBoundingSet=~CAP_NET_ADMIN                        Service has no network configuration privileges
+✓ CapabilityBoundingSet=~CAP_RAWIO                            Service has no raw I/O access
+✓ CapabilityBoundingSet=~CAP_SYS_MODULE                       Service cannot load kernel modules
+✓ CapabilityBoundingSet=~CAP_SYS_TIME                         Service processes cannot change the system clock
+✓ DeviceAllow=                                                Service has a minimal device ACL
+✗ IPAddressDeny=                                              Service does not define an IP address whitelist                        0.2
+✓ KeyringMode=                                                Service doesn't share key material with other services
+✓ NoNewPrivileges=                                            Service processes cannot acquire new privileges
+✓ NotifyAccess=                                               Service child processes cannot alter service state
+✓ PrivateDevices=                                             Service has no access to hardware devices
+✓ PrivateMounts=                                              Service cannot install system mounts
+✓ PrivateTmp=                                                 Service has no access to other software's temporary files
+✗ PrivateUsers=                                               Service has access to other users                                      0.2
+✗ ProtectClock=                                               Service may write to the hardware clock or system clock                0.2
+✓ ProtectControlGroups=                                       Service cannot modify the control group file system
+✗ ProtectHome=                                                Service has read-only access to home directories                       0.1
+✗ ProtectKernelLogs=                                          Service may read from or write to the kernel log ring buffer           0.2
+✓ ProtectKernelModules=                                       Service cannot load or read kernel modules
+✓ ProtectKernelTunables=                                      Service cannot alter kernel tunables (/proc/sys, …)
+✗ ProtectSystem=                                              Service has very limited write access to the OS file hierarchy         0.1
+✓ RestrictAddressFamilies=~AF_PACKET                          Service cannot allocate packet sockets
+✓ RestrictSUIDSGID=                                           SUID/SGID file creation by service is restricted
+✗ SystemCallArchitectures=                                    Service may execute system calls with all ABIs                         0.2
+✗ SystemCallFilter=~@clock                                    Service does not filter system calls                                   0.2
+✗ SystemCallFilter=~@debug                                    Service does not filter system calls                                   0.2
+✗ SystemCallFilter=~@module                                   Service does not filter system calls                                   0.2
+✗ SystemCallFilter=~@mount                                    Service does not filter system calls                                   0.2
+✗ SystemCallFilter=~@raw-io                                   Service does not filter system calls                                   0.2
+✗ SystemCallFilter=~@reboot                                   Service does not filter system calls                                   0.2
+✗ SystemCallFilter=~@swap                                     Service does not filter system calls                                   0.2
+✗ SystemCallFilter=~@privileged                               Service does not filter system calls                                   0.2
+✗ SystemCallFilter=~@resources                                Service does not filter system calls                                   0.2
+✓ AmbientCapabilities=                                        Service process does not receive ambient capabilities
+✓ CapabilityBoundingSet=~CAP_AUDIT_*                          Service has no audit subsystem access
+✓ CapabilityBoundingSet=~CAP_KILL                             Service cannot send UNIX signals to arbitrary processes
+✓ CapabilityBoundingSet=~CAP_MKNOD                            Service cannot create device nodes
+✓ CapabilityBoundingSet=~CAP_NET_(BIND_SERVICE|BROADCAST|RAW) Service has no elevated networking privileges
+✓ CapabilityBoundingSet=~CAP_SYSLOG                           Service has no access to kernel logging
+✓ CapabilityBoundingSet=~CAP_SYS_(NICE|RESOURCE)              Service has no privileges to change resource use parameters
+✓ RestrictNamespaces=~CLONE_NEWCGROUP                         Service cannot create cgroup namespaces
+✓ RestrictNamespaces=~CLONE_NEWIPC                            Service cannot create IPC namespaces
+✓ RestrictNamespaces=~CLONE_NEWNET                            Service cannot create network namespaces
+✓ RestrictNamespaces=~CLONE_NEWNS                             Service cannot create file system namespaces
+✓ RestrictNamespaces=~CLONE_NEWPID                            Service cannot create process namespaces
+✓ RestrictRealtime=                                           Service realtime scheduling access is restricted
+✗ SystemCallFilter=~@cpu-emulation                            Service does not filter system calls                                   0.1
+✗ SystemCallFilter=~@obsolete                                 Service does not filter system calls                                   0.1
+✗ RestrictAddressFamilies=~AF_NETLINK                         Service may allocate netlink sockets                                   0.1
+✗ RootDirectory=/RootImage=                                   Service runs within the host's root directory                          0.1
+✓ SupplementaryGroups=                                        Service has no supplementary groups
+✓ CapabilityBoundingSet=~CAP_MAC_*                            Service cannot adjust SMACK MAC
+✓ CapabilityBoundingSet=~CAP_SYS_BOOT                         Service cannot issue reboot()
+✓ Delegate=                                                   Service does not maintain its own delegated control group subtree
+✗ LockPersonality=                                            Service may change ABI personality                                     0.1
+✗ MemoryDenyWriteExecute=                                     Service may create writable executable memory mappings                 0.1
+✗ RemoveIPC=                                                  Service user may leave SysV IPC objects around                         0.1
+✓ RestrictNamespaces=~CLONE_NEWUTS                            Service cannot create hostname namespaces
+✗ UMask=                                                      Files created by service are world-readable by default                 0.1
+✓ CapabilityBoundingSet=~CAP_LINUX_IMMUTABLE                  Service cannot mark files immutable
+✓ CapabilityBoundingSet=~CAP_IPC_LOCK                         Service cannot lock memory into RAM
+✓ CapabilityBoundingSet=~CAP_SYS_CHROOT                       Service cannot issue chroot()
+✗ ProtectHostname=                                            Service may change system host/domainname                              0.1
+✓ CapabilityBoundingSet=~CAP_BLOCK_SUSPEND                    Service cannot establish wake locks
+✓ CapabilityBoundingSet=~CAP_LEASE                            Service cannot create file leases
+✓ CapabilityBoundingSet=~CAP_SYS_PACCT                        Service cannot use acct()
+✓ CapabilityBoundingSet=~CAP_SYS_TTY_CONFIG                   Service cannot issue vhangup()
+✓ CapabilityBoundingSet=~CAP_WAKE_ALARM                       Service cannot program timers that wake up the system
+✗ RestrictAddressFamilies=~AF_UNIX                            Service may allocate local sockets                                     0.1
+
+→ Overall exposure level for my-nodejs-http-server.service: 3.6 OK 🙂
+----
+
+Spustíme službu a zkontrolujeme její status.
+
+[source, bash]
+----
+systemctl start my-nodejs-http-server.service
+systemctl status my-nodejs-http-server.service
+----
+
+----
+root@pondepe1-cv3-ctl:~/hw3# systemctl status my-nodejs-http-server.service
+● my-nodejs-http-server.service - server.js
+     Loaded: loaded (/lib/systemd/system/my-nodejs-http-server.service; disabled; vendor preset: enabled)
+     Active: active (running) since Tue 2021-05-04 20:41:30 UTC; 6s ago
+   Main PID: 3155196 (node)
+      Tasks: 7 (limit: 9450)
+     Memory: 11.1M
+     CGroup: /system.slice/my-nodejs-http-server.service
+             └─3155196 /usr/bin/node /usr/local/share/nodejs-http-server.js
+
+May 04 20:41:30 pondepe1-cv3-ctl systemd[1]: Started server.js.
+May 04 20:41:31 pondepe1-cv3-ctl node[3155196]: Server running at http://0.0.0.0:8080/
+----
+
+Nakonec ověříme dostupnost služby skrze browser stejně jako v prvním kroku. Jediným rozdílem je, že očekáváme dostupnost na portu `8080`, nikoli `8888`.
+
+image::./images/nodejs-http-test-systemd.png[,900,]
